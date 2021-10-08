@@ -3,7 +3,7 @@ import CardItem from '../cardItem/cardItemPreseter';
 import styled from 'styled-components';
 
 
-const Items = () => {
+const CardItems = () => {
   return(
     <Section>
       <Top>
@@ -54,4 +54,4 @@ const Wapper = styled.div`
   margin-left: 30px ;
 `;
 
-export default Items;
+export default CardItems;

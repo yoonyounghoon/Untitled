@@ -1,10 +1,6 @@
 import React from 'react';
+import CardItems from './cardItemsPresenter';
 
-const ItemsContainer = () => {
-  // return(
-    // <Items {...props} />
-  
-  // );
-}
+const CardItemsContainer = () => <CardItems/>
 
-export default ItemsContainer;
+export default CardItemsContainer;
