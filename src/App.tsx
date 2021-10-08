@@ -1,14 +1,13 @@
 import React from 'react';
-import CardItems from './components/cardItems/cardItemsPresenter';
-import Join from './components/join/joinPresenter.jsx';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import GlobalStyle from './styles/globalStyles';
 
 function App() {
   return (
-    <div className="App">
-      <CardItems/>
-      <br/><br/><br/><br/><br/>
-      <Join/>
-    </div>
+    <BrowserRouter>
+      <GlobalStyle />
+      <Switch></Switch>
+    </BrowserRouter>
   );
 }
 
