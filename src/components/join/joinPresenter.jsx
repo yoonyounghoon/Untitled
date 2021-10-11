@@ -76,37 +76,37 @@ const Join = () => {
         <JoinTitle>회원가입</JoinTitle>
         <InputForm onSubmit={handleCreate}>
           <InputWapper>
-            <InputTitle>이메일</InputTitle>
-            <EmailInput type="text" placeholder="email을 입력해주세요."/>
+            <InputTitle for="email">이메일</InputTitle>
+            <EmailInput id="email" type="text" placeholder="email을 입력해주세요."/>
             <CheckButton ref={buttonRef} onClick={handleCheck}>중복확인</CheckButton>
           </InputWapper>
           <InputWapper>
-            <InputTitle>닉네임</InputTitle>
-            <Input type="text" max-length="10" placeholder="닉네임을 입력해주세요."/>
+            <InputTitle for="nickname">닉네임</InputTitle>
+            <Input id="nickname" type="text" max-length="10" placeholder="닉네임을 입력해주세요."/>
           </InputWapper>
             <AlertLine>사용할 수 있는 이메일입니다.</AlertLine>
             <AlertLine>사용할 수 없는 이메일입니다.</AlertLine>
           <InputWapper>
-            <InputTitle>비밀번호</InputTitle>
-            <PWInput minLength='8' maxLength='16' type={passwordType.type} placeholder="비밀번호를 입력해주세요."/>
+            <InputTitle for="password">비밀번호</InputTitle>
+            <PWInput id="password" minLength='8' maxLength='16' type={passwordType.type} placeholder="비밀번호를 입력해주세요."/>
             <CheckPW onClick={handlePasswordType}>
             	{passwordType.visible ? <span>비밀번호 숨기기</span> : <span>비밀번호 보기</span>}
             </CheckPW> 
           </InputWapper> 
           <InputWapper>
-            <InputTitle>재확인</InputTitle>
-            <PWInput minLength='8' maxLength="16" type={passwordType.type} placeholder="비밀번호를 재입력해주세요."/>
+            <InputTitle for="PWcheck">재확인</InputTitle>
+            <PWInput id="PWcheck" minLength='8' maxLength="16" type={passwordType.type} placeholder="비밀번호를 재입력해주세요."/>
             <CheckPW onClick={handlePasswordType}>
             	{passwordType.visible ? <span>비밀번호 숨기기</span> : <span>비밀번호 보기</span>}
             </CheckPW> 
           </InputWapper> 
           <InputWapper>
-            <InputTitle>전화번호</InputTitle>
-            <Input type="number" placeholder="전화번호를 입력해주세요."/>
+            <InputTitle for="phone-number">전화번호</InputTitle>
+            <Input id="phone-number" type="text" placeholder="전화번호를 입력해주세요."/>
           </InputWapper> 
           <InputWapper>
-            <InputTitle>우편번호</InputTitle>
-            <ZoneCodeInput value={zoneCode} type="text" placeholder="우편번호를 입력해주세요."/>
+            <ZoneCodeTitle for="zone-code">우편번호</ZoneCodeTitle>
+            <ZoneCodeInput id="zone-code" value={zoneCode} type="text" placeholder="우편번호를 입력해주세요."/>
             <SearchButton onClick={ () => setPopup(true) }>우편번호 검색</SearchButton>
             {popup && <DaumPostCode
                     onComplete={handleAddress}
@@ -115,12 +115,12 @@ const Join = () => {
                   />}
           </InputWapper> 
           <InputWapper>
-            <InputTitle>주소</InputTitle>
-            <Input value={address} type="text" placeholder="주소를 입력해주세요."/>
+            <InputTitle for="address">주소</InputTitle>
+            <Input id="address" value={address} type="text" placeholder="주소를 입력해주세요."/>
           </InputWapper> 
           <InputWapper>
-            <InputTitle>상세주소</InputTitle>
-            <Input type="text" placeholder="상세주소를 입력해주세요."/>
+            <InputTitle for="detail-address">상세주소</InputTitle>
+            <Input id="detail-address" type="text" placeholder="상세주소를 입력해주세요."/>
           </InputWapper> 
         </InputForm>
         <Button>등록</Button>
@@ -153,6 +153,7 @@ const InputForm = styled.form`
 
 const JoinTitle = styled.h1`
   margin: 40px 0px;
+  font-size: 32px;
 `;
 
 const InputWapper = styled.div`
@@ -167,60 +168,85 @@ const AlertLine = styled.div`
  text-align: center;
 `;
 
-const InputTitle = styled.span`
+const InputTitle = styled.label`
   position: absolute;
   margin-right:20px;
   width: 130px;
-  line-height: 55px;
-  font-size: 1.2em;
-
+  line-height: 60px;
+  font-size: 23px;
 `;
 
 const EmailInput = styled.input`
   position: relative;
-  width: 280px;
-  height: 35px;
+  width: 205px;
+  height: 30px;
   left: 110px;
-  padding-left: 5px;
+  padding: 18px;
   font-size: 1.1em;
+  background-color: #F6F8FA;
+  border: 0px;
+  &::placeholder{
+    color: #8492A6;
+    font-size: 16px;
+  }
+  &:focus{
+    outline: none;
+  }
+  border-radius: 6px;
 `;
 
 const CheckButton = styled.button`
   margin: auto;
   background-color: transparent;
-  border: 1px #9980FA solid;
-  padding: 10px 10px;
+  border: 2px #9980FA solid;
+  padding: 15px 33px;
   color: #9980FA;
   border-radius: 5px;
-  margin-left:15px;
+  margin-left: 15px;
   left: 110px;
   position: relative;
+  cursor: pointer;
+  font-size: 20px;
 `;
 
 const Input = styled.input`
   position: relative;
   width: 370px;
-  height: 35px;
+  height: 30px;
   &:focus {
     outline: none;
   }
-  padding-left: 5px;
+  padding: 18px;
   left: 100px;
   font-size: 1.1em;
   margin: 0px 10px;
+  background-color: #F6F8FA;
+  border: 0px;
+  &::placeholder{
+    color: #8492A6;
+    font-size: 16px;
+  }
+  border-radius: 6px;
 `;
 
 const PWInput = styled.input`
   position: relative;
   width: 250px;
-  height: 35px;
+  height: 30px;
   &:focus {
     outline: none;
   }
-  padding-left: 5px;
+  padding: 18px;
   margin: 0px 10px;
   left: 100px;
   font-size: 1.1em;
+  background-color: #F6F8FA;
+  border: 0px;
+  &::placeholder{
+    color: #8492A6;
+    font-size: 16px;
+  }
+  border-radius: 6px;
 `;
 
 const CheckPW = styled.span`
@@ -229,27 +255,47 @@ const CheckPW = styled.span`
   left: 100px;
 `;
 
+const ZoneCodeTitle = styled.label`
+  position: absolute;
+  margin-right:20px;
+  width: 130px;
+  line-height: 83px;
+  font-size: 23px;
+`;
+
 const ZoneCodeInput = styled.input`
   position: relative;
-  width: 250px;
-  height: 35px;
+  width: 190px;
+  height: 30px;
   left: 110px;
   font-size: 1.1em;
-  padding-left: 5px;
+  padding: 18px;
+  background-color: #F6F8FA;
+  border: 0px;
+  &::placeholder{
+    color: #8492A6;
+    font-size: 16px;
+  }
+  &:focus{
+    outline: none;
+  }
+  border-radius: 6px;
 `;
 
 
 const SearchButton = styled.button`
   margin: auto;
   background-color: transparent;
-  border: 1px #9980FA solid;
-  padding: 10px 10px;
+  border: 2px #9980FA solid;
+  padding: 15px 18px;
   color: #9980FA;
   border-radius: 5px;
   margin-left:15px;
   margin-top:15px;
   left: 110px;
   position: relative;
+  cursor: pointer;
+  font-size: 20px;
 `;
 
 const Button = styled.button`
@@ -257,7 +303,7 @@ const Button = styled.button`
   font-size: 20px;
   background-color: #9980FA;
   border-radius: 5px;
-  padding: 5px 35px;
+  padding: 10px 45px;
   color: #fff;
   margin: auto;
   margin: 30px 0px;
