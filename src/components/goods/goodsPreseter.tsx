@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CardItem: React.FC = () => {
+
+const Goods = () => {
   return (
       <Card>
         <img src="https://picsum.photos/150" alt="product_image"/>
@@ -14,10 +15,10 @@ const CardItem: React.FC = () => {
             <span>(28)</span>
           </div>
         </ItemTop>
-        <ItemBottom>
+        <div>
           <Price>가격</Price>
           <Author>작가명</Author>
-        </ItemBottom>
+        </div>
       </Card>
   );
 }
@@ -41,11 +42,6 @@ const Icon = styled.i`
   color: red;
 `;
 
-const ItemBottom = styled.div`
-  position:absolute;
- 
-`;
-
 const Price = styled.p`
   font-size: 18px;
 `;
@@ -54,4 +50,4 @@ const Author = styled.p`
   font-size: 12px;
 `;
 
-export default CardItem;
+export default Goods;

@@ -1,34 +1,32 @@
 import React from 'react';
-import CardItem from '../cardItem/cardItemPreseter';
+import Goods from '../goods/goodsPreseter';
 import styled from 'styled-components';
 
-
-const CardItems = () => {
+const ListGoods = () => {
   return(
     <Section>
-      <Top>
+      <ListTop>
         <Title>Best Items</Title>
         <Plus>더보기</Plus>
-      </Top>
+      </ListTop>
       <Divide></Divide>
-      <Wapper>
-        <CardItem/>
-        <CardItem/>
-        <CardItem/>
-        <CardItem/>
-      </Wapper>
+      <ListBottom>
+        <Goods/>
+        <Goods/>
+        <Goods/>
+        <Goods/>
+      </ListBottom>
     </Section>
   
   );
 }
 
 const Section = styled.section`
-  font-family: 'Noto Sans KR', sans-serif;
   width: 49%;
   margin: auto;
 `;
 
-const Top = styled.div`
+const ListTop = styled.div`
   display: flex;
   justify-content: space-between;
 `;
@@ -47,11 +45,11 @@ const Divide = styled.div`
   background-color: black;
 `;
 
-const Wapper = styled.div`
+const ListBottom = styled.div`
   display:flex;
   justify-content: center;
   margin-top: 35px ;
   margin-left: 30px ;
 `;
 
-export default CardItems;
+export default ListGoods;
