@@ -40,7 +40,6 @@ function Login({}: LoginProps) {
 export default Login;
 
 const LoginBlock = styled.div`
-  width: 900px;
   height: 800px;
   display: flex;
   flex-direction: column;
@@ -93,5 +92,5 @@ const StyledLink = styled(Link)`
 `;
 
 const LoginBtn = styled(Button)`
-  margin-bottom: '16px';
+  margin-bottom: 16px;
 `;
