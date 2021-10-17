@@ -1,5 +1,5 @@
 import React from 'react';
-import Goods from '../goods/goodsPreseter';
+import Goods from '../goods/Goods';
 import styled from 'styled-components';
 
 const ListGoods = () => {
@@ -22,11 +22,12 @@ const ListGoods = () => {
 }
 
 const Section = styled.section`
-  width: 49%;
+  width: 940px;
   margin: auto;
 `;
 
 const ListTop = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
 `;
@@ -47,9 +48,9 @@ const Divide = styled.div`
 
 const ListBottom = styled.div`
   display:flex;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 35px ;
-  margin-left: 30px ;
+  /* width: 100%; */
 `;
 
 export default ListGoods;

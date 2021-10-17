@@ -4,28 +4,32 @@ import styled from 'styled-components';
 
 const Goods = () => {
   return (
-      <Card>
-        <img src="https://picsum.photos/150" alt="product_image"/>
+      <Container>
+        <ItemImg src="https://picsum.photos/180" alt="product_image"/>
         <ItemTop>
           <div>
             <Name>상품명</Name>
           </div>
           <div>
-            <Icon className="fas fa-heart"></Icon>
-            <span>(28)</span>
+            <FavoriteIcon className="fas fa-heart"></FavoriteIcon>
+            <FavoriteNum>(28)</FavoriteNum>
           </div>
         </ItemTop>
         <div>
           <Price>가격</Price>
           <Author>작가명</Author>
         </div>
-      </Card>
+      </Container>
   );
 }
 
-const Card = styled.div`
-  width: 150px;
-  margin-right: 30px;
+const Container = styled.div`
+  width: 195px;
+`;
+
+const ItemImg = styled.img`
+  width: 195px;
+  height: 195px;
 `;
 
 const ItemTop = styled.div`
@@ -38,8 +42,12 @@ const Name = styled.span`
   font-size: 14px;
 `
 
-const Icon = styled.i`
+const FavoriteIcon = styled.i`
   color: red;
+`;
+
+const FavoriteNum = styled.span`
+  font-size: 12px;
 `;
 
 const Price = styled.p`
