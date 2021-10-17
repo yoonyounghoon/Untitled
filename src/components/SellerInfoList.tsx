@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import palette from 'styles/palette';
 import Button from './common/Button';
 
 const CountBox = ({ title }: { title: string }) => {
@@ -27,13 +28,18 @@ const SellerInfoList = () => {
       ></SellerImage>
       <SellerProfile>
         <h3>디디얌</h3>
-        <p>★★★★★ 4.0</p>
+        <p>
+          <i className="fas fa-star"></i>
+          <i className="fas fa-star"></i>
+          <i className="fas fa-star"></i>
+          <i className="fas fa-star"></i>
+        </p>
         <p>디디얌 베이커리 & 디저트</p>
         <CountBoxBlock>
           <CountBox title="판매상품" />
           <CountBox title="팔로워" />
         </CountBoxBlock>
-        <Button size="small">팔로우</Button>
+        <FollowBtn size="small">팔로우</FollowBtn>
       </SellerProfile>
     </SellerInfoBlock>
   );
@@ -43,10 +49,10 @@ export default SellerInfoList;
 
 const SellerInfoBlock = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 90px;
-  margin-bottom: 32px;
+  margin-bottom: 62px;
 `;
 
 const SellerImage = styled.img`
@@ -57,10 +63,25 @@ const SellerImage = styled.img`
   margin-right: 100px;
 `;
 
-const SellerProfile = styled.div``;
+const SellerProfile = styled.div`
+  h3 {
+    font-size: 18px;
+  }
+  p {
+    font-size: 13px;
+    marginbo
+  }
+  .fa-star {
+    color: ${palette.purple};
+  }
+`;
 
 const CountBoxBlock = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
+`;
+
+const FollowBtn = styled(Button)`
+  padding: 0.25rem 0.5rem;
 `;
