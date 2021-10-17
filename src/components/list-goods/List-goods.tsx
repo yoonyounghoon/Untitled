@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Goods from '../goods/Goods';
 import styled from 'styled-components';
 
 const ListGoods = () => {
+
+  const [title, setTitle] = useState('Best Items');
+
   return(
     <Section>
       <ListTop>
-        <Title>Best Items</Title>
-        <Plus>더보기</Plus>
+        <TitleWapper>
+          <span>{title}</span>
+        </TitleWapper>
+       <More>
+         <button>더보기</button>
+       </More>
       </ListTop>
       <Divide></Divide>
       <ListBottom>
@@ -23,34 +30,44 @@ const ListGoods = () => {
 
 const Section = styled.section`
   width: 940px;
-  margin: auto;
+  margin: 50px auto;
 `;
 
 const ListTop = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
-const Title = styled.h1`
-  font-weight:600;
+const TitleWapper = styled.div`
+  margin-bottom: 13px;
+  & > span {
+    font-size: 28px;
+    margin-bottom: 20px;
+  } 
 `;
 
-const Plus = styled.p`
-  line-height: 40px;
+const More = styled.div`
+  height: 10px;
+  & > button {
+    border: 0px;
+    background-color: transparent;
+    cursor: pointer;
+
+  }
 `;
 
 const Divide = styled.div`
   width: 100%;
   height: 1px;
-  background-color: black;
+  background-color: #5A5D5A;
 `;
 
 const ListBottom = styled.div`
   display:flex;
   justify-content: space-between;
   margin-top: 35px ;
-  /* width: 100%; */
 `;
 
 export default ListGoods;

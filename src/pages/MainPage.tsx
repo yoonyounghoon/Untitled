@@ -1,5 +1,5 @@
 import React from 'react';
-import ListGoods from '../components/list-goods/list-goods';
+import ListGoods from '../components/list-goods/List-goods';
 
 const MainPage = () => {
   return (
