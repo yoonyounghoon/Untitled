@@ -1,7 +1,8 @@
 import React from 'react';
+import ListGoods from '../components/list-goods/List-goods';
 import Carousel from '../components/Carousel';
 import CategoryMap from '../components/CategoryMap/CategoryMap';
-import ListGoods from '../components/list-goods/list-goodsPresenter';
+
 
 const MainPage = () => {
   return (
