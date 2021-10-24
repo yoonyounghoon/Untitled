@@ -44,22 +44,20 @@ const LoginBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border: 1px solid #dbdbdb;
+  margin-top: 50px;
 `;
 
 const Title = styled.h2`
   margin: 0;
-  margin-bottom: 36px;
 `;
 
 const LoginForm = styled.form`
+  width: 400px;
   display: flex;
   flex-direction: column;
 `;
 
 const LoginInput = styled.input`
-  width: 680px;
   height: 54px;
   padding: 0px 19px;
   background-color: #f6f8fa;
@@ -78,7 +76,7 @@ const FindWrap = styled.div`
   display: flex;
   justify-content: right;
   margin-top: 30px;
-  margin-bottom: 164px;
+  margin-bottom: 80px;
 `;
 
 const StyledLink = styled(Link)`
