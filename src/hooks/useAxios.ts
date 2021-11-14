@@ -9,7 +9,7 @@ const useAxios = () => {
       throw new Error(`unHandled axios error: ${error}`);
     }
   }
-
+  
   return { onAxios };
 }
 

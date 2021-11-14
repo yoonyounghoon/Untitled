@@ -29,16 +29,18 @@ function useJoin(){
     user: '',
     server: '',
   });
+  const [token, setToken] = useState(randomString()); // 이메일 인증 토큰
+  const [tokenForJoin, setTokenForJoin] = useState(''); // 회원가입 토큰
   const [form, setForm] = useState({
-    userid:'',
-    email: '',
-    username: '',
-    password: '',
-    phonenum: '',
     address: '',
+    detailAddress: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
     postcode: '',
-    detail_address: '',
-    token: randomString(),
+    token: '',
+    userid:'',
+    username: '',
   });
   const [signUpSuccess, setSignUpSuccess] = useState(false);
 
@@ -54,7 +56,7 @@ function useJoin(){
   };
 
   // 아이디 중복검사
-  const onCheckId: React.ChangeEventHandler<HTMLInputElement> = (e) => { // post 400
+  const onCheckId: React.ChangeEventHandler<HTMLInputElement> = (e) => { 
     onAxios('overlap/userid', {"userid": form.userid}, 'userid overlap')
     .then((res) => {
       setIsOverlap({...isOverlap, id: '사용가능한 아이디입니다'})
@@ -62,15 +64,16 @@ function useJoin(){
     .catch((error) => setIsOverlap({...isOverlap, username: ''}))
   }
 
+  
   const onCheckEmail:React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    //중복검사
+    // 이메일 중복검사
     onAxios('overlap/email', {"email": form.email}, 'Email overlap')
       .then((res) => {
         setIsOverlap({...isOverlap, email: '사용가능한 이메일입니다'})
       })
       .catch((error) => setIsOverlap({...isOverlap, username: ''}))
     
-    //이메일 인증메일 발송
+    // 이메일 인증메일 발송
     fetch("https://gradu-test.herokuapp.com/verification/email", {
       method: "POST",
       headers: {
@@ -78,7 +81,7 @@ function useJoin(){
       },
       body: JSON.stringify({
         "email": form.email, 
-        "token": randomString()
+        "token": token,
       }),
     })
     .then((response) => response.json())
@@ -86,13 +89,21 @@ function useJoin(){
   }
 
   //이메일 인증코드 일치 확인
-  const onCertifyCertificationCode = () => { // Post 500
-
+  const onCertifyCertificationCode = () => { 
     if( certificationCode.user === certificationCode.server ){ 
-      onAxios('verification/code', {"certificationCode": certificationCode.user, "token": randomString()}, 'confirm same_code').then(() => {
-        // 인증완료 메세지 전달
-        setIsCheck(true);
+      fetch("https://gradu-test.herokuapp.com/verification/code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "certificationCode": certificationCode.user, 
+          "token": token,
+        }),
       })
+      .then((response) => response.json())
+      .then((data) => setTokenForJoin(data.data.token))
+      .then(() => setIsCheck(true))
     }
   };
 
@@ -127,16 +138,17 @@ function useJoin(){
    };
 
 
-  const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => {  // Post 400
+  const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => { 
     e.preventDefault();
 
-    onAxios('join', form, 'join')
-    .then((res) => {
+    onAxios('join', {...form, token: tokenForJoin}, 'join')
+    .then(() => {
       setSignUpSuccess(true);
     })
     .catch((error) => {
-    })
-    .finally(() => {});
+      console.log(error.message)
+      console.log(error)
+    });
   };
 
 

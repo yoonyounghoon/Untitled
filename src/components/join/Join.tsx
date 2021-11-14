@@ -18,7 +18,7 @@ const Join = () => {
       <InputForm onSubmit={onSubmitForm}>
         <InputWapper>
           <InputTitle htmlFor="userid">아이디</InputTitle>
-          <HasButtonInput id="userid" name="userid" type="text" placeholder="id를 입력해주세요." onChange={onChange}/>
+          <HasButtonInput id="userid" name="userid" type="text" minLength="5" placeholder="id를 입력해주세요." onChange={onChange}/>
           <CheckButton type="button" onClick={onCheckId}>아이디 인증</CheckButton>
           {isOverlap.id === '' ?  <AlertRedLine>{isOverlap.id}</AlertRedLine> : <AlertGreenLine>{isOverlap.id}</AlertGreenLine>}
         </InputWapper>
@@ -47,21 +47,18 @@ const Join = () => {
           onChange={onChange} 
           type="password"
           minLength='8' maxLength='16' 
-          placeholder="비밀번호를 입력해주세요."/>
+          placeholder="문자, 숫자, 특수문자를 포함한 8~15자리의 비밀번호를 입력해주세요."/>
         </InputWapper> 
         <InputWapper>
-          <InputTitle htmlFor="passwordCheck">재확인</InputTitle>
+          <InputTitle>재확인</InputTitle>
           <Input
-              id="passwordCheck"
-              name="passwordCheck"
               minLength='8' maxLength="16" 
               type="password"
-              placeholder="비밀번호를 재입력해주세요."
-              onChange={onChange} />
+              placeholder="비밀번호를 재입력해주세요." />
         </InputWapper> 
         <InputWapper>
-          <InputTitle htmlFor="phoneunm">전화번호</InputTitle>
-          <Input id="phoneunm" name="phonenum" type="text" placeholder="전화번호를 입력해주세요." onChange={onChange}/>
+          <InputTitle htmlFor="phoneNumber">전화번호</InputTitle>
+          <Input id="phoneNumber" name="phoneNumber" type="text" placeholder="전화번호를 입력해주세요." onChange={onChange}/>
         </InputWapper> 
         <InputWapper>
           <ZoneCodeTitle htmlFor="postcode">우편번호</ZoneCodeTitle>
@@ -78,8 +75,8 @@ const Join = () => {
           <Input id="address" name="address" type="text" defaultValue={form.address} placeholder="주소를 입력해주세요."/>
         </InputWapper> 
         <InputWapper>
-          <InputTitle htmlFor="detail_address">상세주소</InputTitle>
-          <Input id="detail_address" name="detail_address" type="text" placeholder="상세주소를 입력해주세요." onChange={onChange}/>
+          <InputTitle htmlFor="detailAddress">상세주소</InputTitle>
+          <Input id="detailAddress" name="detailAddress" type="text" placeholder="상세주소를 입력해주세요." onChange={onChange}/>
         </InputWapper> 
         <Button type="submit">등록</Button>
       </InputForm>
