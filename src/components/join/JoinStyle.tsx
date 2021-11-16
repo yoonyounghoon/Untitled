@@ -213,8 +213,8 @@ export const Button = styled.button`
   `}
 `;
 
- //우편번호 검색 페이지 관련 CSS
-export const postCodeStyle = {
+// 우편번호 검색 페이지 관련 CSS
+export const postCodeStyle: React.CSSProperties = {
   position: 'absolute',
   top: '100%',
   left: 'width/2',
@@ -225,3 +225,6 @@ export const postCodeStyle = {
   border: '1px black solid',
   zIndex: 500,
 };
+
+
+

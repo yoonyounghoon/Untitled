@@ -56,7 +56,7 @@ function useJoin(){
   };
 
   // 아이디 중복검사
-  const onCheckId: React.ChangeEventHandler<HTMLInputElement> = (e) => { 
+  const onCheckId: React.MouseEventHandler<HTMLButtonElement> = (e) => { 
     onAxios('overlap/userid', {"userid": form.userid}, 'userid overlap')
     .then((res) => {
       setIsOverlap({...isOverlap, id: '사용가능한 아이디입니다'})
@@ -65,7 +65,7 @@ function useJoin(){
   }
 
   
-  const onCheckEmail:React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onCheckEmail:React.MouseEventHandler<HTMLButtonElement> = (e) => {
     // 이메일 중복검사
     onAxios('overlap/email', {"email": form.email}, 'Email overlap')
       .then((res) => {
@@ -109,7 +109,7 @@ function useJoin(){
 
 
   //닉네임 중복검사
-  const onCheckNickname: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onCheckNickname: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onAxios('overlap/username', {"username": form.username}, 'username overlap')
     .then((res) => 
       setIsOverlap({...isOverlap, username: '사용가능한 닉네임입니다'})

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlertRedLine, AlertGreenLine, postCodeStyle, JoinContainer, InputForm, MainTitle, InputWapper,  
-  InputTitle, CheckButton, Input, ZoneCodeTitle, SearchButton, Button, HasButtonInput} from './style.tsx';
+  InputTitle, CheckButton, Input, ZoneCodeTitle, SearchButton, Button, HasButtonInput} from './JoinStyle';
 import DaumPostCode from 'react-daum-postcode'; // 우편주소 검색 리액트 라이브러리
 import { Link } from 'react-router-dom';
 import useJoin from '../../hooks/useJoin';
@@ -18,7 +18,7 @@ const Join = () => {
       <InputForm onSubmit={onSubmitForm}>
         <InputWapper>
           <InputTitle htmlFor="userid">아이디</InputTitle>
-          <HasButtonInput id="userid" name="userid" type="text" minLength="5" placeholder="id를 입력해주세요." onChange={onChange}/>
+          <HasButtonInput id="userid" name="userid" type="text" placeholder="id를 입력해주세요." onChange={onChange}/>
           <CheckButton type="button" onClick={onCheckId}>아이디 인증</CheckButton>
           {isOverlap.id === '' ?  <AlertRedLine>{isOverlap.id}</AlertRedLine> : <AlertGreenLine>{isOverlap.id}</AlertGreenLine>}
         </InputWapper>
@@ -42,19 +42,12 @@ const Join = () => {
         </InputWapper>
         <InputWapper>
           <InputTitle htmlFor="password">비밀번호</InputTitle>
-          <Input id="password" 
-          name="password"
-          onChange={onChange} 
-          type="password"
-          minLength='8' maxLength='16' 
+          <Input id="password" name="password" onChange={onChange} type="password"
           placeholder="문자, 숫자, 특수문자를 포함한 8~15자리의 비밀번호를 입력해주세요."/>
         </InputWapper> 
         <InputWapper>
           <InputTitle>재확인</InputTitle>
-          <Input
-              minLength='8' maxLength="16" 
-              type="password"
-              placeholder="비밀번호를 재입력해주세요." />
+          <Input type="password" placeholder="비밀번호를 재입력해주세요." />
         </InputWapper> 
         <InputWapper>
           <InputTitle htmlFor="phoneNumber">전화번호</InputTitle>

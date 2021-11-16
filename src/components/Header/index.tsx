@@ -84,8 +84,4 @@ const NavItem = styled.li`
   font-size: 16px;
   height: 55px;
   padding: 20px 40px 0;
-<<<<<<< HEAD
 `;
-=======
-`;
->>>>>>> bea60ef45aa4826fa61c3c3dab706224c9e1dd88
