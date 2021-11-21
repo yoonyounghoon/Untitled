@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { login } from '../modules/Login/reducer';
+import { RootState } from '../modules/store';
 
 function useLogin() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [form, setForm] = useState({
-    email: '',
+    id: '',
     password: '',
   });
+  const { isSuccess } = useSelector((state: RootState) => state.login);
+
+  useEffect(() => {
+    if (isSuccess) {
+      history.push('/');
+    }
+  }, [isSuccess, history]);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
@@ -14,7 +28,13 @@ function useLogin() {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    console.log(form.email, form.password);
+    const { id, password } = form;
+
+    try {
+      dispatch(login({ id, password }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return { onChange, onSubmit };
