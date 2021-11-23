@@ -5,6 +5,7 @@ import Header from './components/Header';
 import JoinPage from './pages/JoinPage';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 import GlobalStyle from './styles/globalStyles';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" exact component={MainPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/join" component={JoinPage} />
+        <Route path="/products" component={ProductDetailPage} />
         {/* <Route path="/chatting" component={ChattingPage} /> */}
       </Switch>
     </BrowserRouter>
