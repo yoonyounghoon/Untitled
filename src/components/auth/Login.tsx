@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useLogin from '../hooks/useLogin';
-import palette from '../styles/palette';
-import Button from './common/Button';
+import useLogin from '../../hooks/useLogin';
+import palette from '../../styles/palette';
+import Button from '../common/Button';
 
 type LoginProps = {};
 
