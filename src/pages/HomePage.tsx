@@ -3,7 +3,7 @@ import ListGoods from '../components/list-goods/List-goods';
 import Carousel from '../components/Carousel';
 import CategoryMap from '../components/CategoryMap';
 
-const MainPage = () => {
+const HomePage = () => {
   return (
     <>
       <Carousel />
@@ -15,4 +15,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default HomePage;

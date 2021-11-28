@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import { JoinPage, LoginPage, MainPage } from './pages';
+import { JoinPage, LoginPage, HomePage } from './pages';
 import GlobalStyle from './styles/globalStyles';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <GlobalStyle />
       <Header />
       <Switch>
-        <Route path="/" exact component={MainPage} />
+        <Route path="/" exact component={HomePage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/join" component={JoinPage} />
       </Switch>
