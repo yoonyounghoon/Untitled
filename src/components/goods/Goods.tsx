@@ -1,27 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 
+type productItem = {
+  title: string;
+  price: number;
+  rating: number;
+};
 
-const Goods = () => {
+const Goods = ({ title, price, rating }: productItem) => {
   return (
-      <Container>
-        <ItemImg src="https://picsum.photos/180" alt="product_image"/>
-        <ItemTop>
-          <div>
-            <Name>상품명</Name>
-          </div>
-          <div>
-            <FavoriteIcon className="fas fa-heart"></FavoriteIcon>
-            <FavoriteNum>(28)</FavoriteNum>
-          </div>
-        </ItemTop>
+    <Container>
+      <ItemImg src="https://picsum.photos/180" alt="product_image" />
+      <ItemTop>
+        <Author>작가</Author>
         <div>
-          <Price>가격</Price>
-          <Author>작가명</Author>
+          <FavoriteIcon className="fas fa-heart"></FavoriteIcon>
+          <FavoriteNum>(28)</FavoriteNum>
         </div>
-      </Container>
+      </ItemTop>
+      <div>
+        <Name>{title}</Name>
+        <Price>{price}</Price>
+      </div>
+    </Container>
   );
-}
+};
 
 const Container = styled.div`
   width: 195px;
@@ -36,13 +39,14 @@ const ItemImg = styled.img`
 const ItemTop = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top:20px;
+  margin-top: 20px;
 `;
 
-const Name = styled.span`
+const Name = styled.div`
   font-size: 14px;
   cursor: pointer;
-`
+  width: 40px;
+`;
 
 const FavoriteIcon = styled.i`
   color: red;
@@ -53,14 +57,12 @@ const FavoriteNum = styled.span`
   cursor: pointer;
 `;
 
-const Price = styled.p`
-  display: inline-block;
+const Price = styled.div`
   font-size: 18px;
   cursor: pointer;
 `;
 
-const Author = styled.p`
-  width: 40px;
+const Author = styled.span`
   font-size: 12px;
   cursor: pointer;
 `;
