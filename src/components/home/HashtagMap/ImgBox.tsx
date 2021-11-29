@@ -10,7 +10,7 @@ function ImgBox({ width, height, text }: imgBoxProps) {
   return (
     <Wrapper>
       <ImgItem width={width} height={height} src="https://picsum.photos/400" />
-      <CategoryTag>#{text}</CategoryTag>
+      <Hashtag>#{text}</Hashtag>
     </Wrapper>
   );
 }
@@ -34,7 +34,7 @@ const ImgItem = styled.img`
   }
 `;
 
-const CategoryTag = styled.strong`
+const Hashtag = styled.strong`
   position: absolute;
   white-space: nowrap;
   font-size: 26px;

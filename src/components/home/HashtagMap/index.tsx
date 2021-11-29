@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import palette from '../../styles/palette';
+import palette from '../../../styles/palette';
 import ImgBox from './ImgBox';
 
-function CategoryMap() {
+function HashtagMap() {
   return (
     <Container>
-      <Title>CATEGORY</Title>
+      <Title>해시태그</Title>
       <ImgMapContainer>
         <div>
           <ImgDivisionRow>
@@ -24,7 +24,7 @@ function CategoryMap() {
   );
 }
 
-export default CategoryMap;
+export default HashtagMap;
 
 const Container = styled.section`
   width: 950px;

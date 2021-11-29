@@ -1,12 +1,7 @@
 import React from 'react';
-import Goods from '../goods/Goods';
+import Goods from '../../goods/Goods';
 import styled from 'styled-components';
-
-type productItem = {
-  productName: string;
-  productPrice: number;
-  productRating: number;
-};
+import { productItem } from '../../../modules/Products/reducer';
 
 type Props = {
   title: string;
@@ -21,12 +16,12 @@ const ListGoods: React.FC<Props> = ({ products, title }) => {
         <MoreBtn>더보기</MoreBtn>
       </Header>
       <List>
-        {products?.map((product) => {
+        {products.map((product) => {
           return (
             <Goods
-              title={product.productName}
-              price={product.productPrice}
-              rating={product.productRating}
+              productName={product.productName}
+              productPrice={product.productPrice}
+              productRating={product.productRating}
             />
           );
         })}

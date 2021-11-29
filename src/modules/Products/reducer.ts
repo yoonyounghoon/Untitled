@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getProductsAPI } from '../../api/products';
 
-type productItem = {
-  author: string;
-  title: string;
-  price: number;
-  rating: number;
+export type productItem = {
+  productName: string;
+  productPrice: number;
+  productRating: number;
 };
 
 type productsState = {

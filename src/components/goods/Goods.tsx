@@ -1,26 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { productItem } from '../../modules/Products/reducer';
+import palette from '../../styles/palette';
 
-type productItem = {
-  title: string;
-  price: number;
-  rating: number;
-};
-
-const Goods = ({ title, price, rating }: productItem) => {
+const Goods = ({ productName, productPrice, productRating }: productItem) => {
   return (
     <Container>
       <ItemImg src="https://picsum.photos/180" alt="product_image" />
       <ItemTop>
-        <Author>작가</Author>
-        <div>
+        <Author>피의게임</Author>
+        <Hearts>
           <FavoriteIcon className="fas fa-heart"></FavoriteIcon>
-          <FavoriteNum>(28)</FavoriteNum>
-        </div>
+          <FavoriteNum>({productRating})</FavoriteNum>
+        </Hearts>
       </ItemTop>
       <div>
-        <Name>{title}</Name>
-        <Price>{price}</Price>
+        <Name>{productName}</Name>
+        <Price>
+          {productPrice.toLocaleString('ko-KR', {
+            currency: 'KRW',
+          })}
+          원
+        </Price>
       </div>
     </Container>
   );
@@ -45,7 +46,7 @@ const ItemTop = styled.div`
 const Name = styled.div`
   font-size: 14px;
   cursor: pointer;
-  width: 40px;
+  margin-bottom: 8px;
 `;
 
 const FavoriteIcon = styled.i`
@@ -65,6 +66,12 @@ const Price = styled.div`
 const Author = styled.span`
   font-size: 12px;
   cursor: pointer;
+  color: ${palette.grey};
+  margin-bottom: 10px;
+`;
+
+const Hearts = styled.span`
+  display: flex;
 `;
 
 export default Goods;

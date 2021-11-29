@@ -14,7 +14,6 @@ function useProducts() {
   useEffect(() => {
     dispatch(getRecentProducts());
     // dispatch(getPopularProducts());
-    // dispatch(getLikeProducts());
   }, [dispatch]);
 
   return { products };
