@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useLogin from '../hooks/useLogin';
-import palette from '../styles/palette';
-import Button from './common/Button';
+import useLogin from '../../hooks/useLogin';
+import Button from '../common/Button';
 
 type LoginProps = {};
 
@@ -17,7 +16,7 @@ function Login({}: LoginProps) {
         <LoginInput
           type="text"
           placeholder="아이디를 입력해주세요"
-          name="email"
+          name="id"
           onChange={onChange}
         />
         <LoginInput

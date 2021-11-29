@@ -1,11 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import styled from 'styled-components';
 import Header from './components/Header';
-import JoinPage from './pages/JoinPage';
-import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
-import ProductDetailPage from './pages/ProductDetailPage';
+import { JoinPage, LoginPage, MainPage, ProductDetailPage } from './pages';
 import GlobalStyle from './styles/globalStyles';
 
 function App() {
@@ -25,5 +21,3 @@ function App() {
 }
 
 export default App;
-
-const AppLayout = styled.div``;
