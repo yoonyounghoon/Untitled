@@ -1,20 +1,61 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 
+const IMAGE_MAX_COUNT = 5;
+
 const ProductRegister = () => {
+  const [images, setImages] = useState([]);
+
+  // 추후에 이미지 압축 구현 browser-image-compression
+  const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
+    const nowSelectImageList = e.target.files;
+    const nowImageList = [...images]; // 기존 이미지들
+
+    if (images.length === IMAGE_MAX_COUNT) {
+      alert('이미지 개수 초과');
+      return;
+    }
+    for (let i = 0; i < nowSelectImageList.length; i++) {
+      const nowImgUrl = URL.createObjectURL(nowSelectImageList[i]);
+      nowImageList.push(nowImgUrl);
+    }
+
+    setImages(nowImageList);
+    console.log(images);
+  };
+
   return (
     <RegisterPage>
       <RegisterWrapper>
         <RegisterItem>
-          <RegisterTitle>상품 이미지</RegisterTitle>
+          <RegisterTitle>
+            상품 이미지 &nbsp;
+            <ImageCount>
+              {images.length}
+              {`/${IMAGE_MAX_COUNT}`}
+            </ImageCount>
+          </RegisterTitle>
+
           <FileUploadContainer>
-            <Button inverted size="small">
-              +
-            </Button>
-            {/* 등록 한 이미지들 */}
+            <Label>
+              <LabelText>+</LabelText>
+              <InputElement
+                type="file"
+                onChange={handleUploadImage}
+              ></InputElement>
+            </Label>
             <PreviewImageContainer>
-              <PreviewImage src="./asset/join.jpg" alt="preview-img" />
+              {!!images.length &&
+                images.map((img, index) => (
+                  <PreviewImage
+                    src={img}
+                    alt="preview-img"
+                    key={`preview-image-${index + 1}`}
+                  />
+                ))}
             </PreviewImageContainer>
           </FileUploadContainer>
         </RegisterItem>
@@ -51,8 +92,8 @@ const ProductRegister = () => {
 };
 
 const RegisterPage = styled.div`
-  margin: 0 auto;
   max-width: 1020px;
+  margin: 0 auto;
 `;
 
 const RegisterWrapper = styled.div`
@@ -63,17 +104,39 @@ const RegisterWrapper = styled.div`
 const FileUploadContainer = styled.div`
   max-height: 120px;
   display: flex;
+`;
 
-  overflow-x: auto;
+const Label = styled.label`
+  display: block;
+  width: 120px;
+  height: 100%;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${palette.purple};
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+`;
+
+const LabelText = styled.span`
+  margin: 0 0 0.3rem 0.4rem;
+`;
+
+const InputElement = styled.input`
+  display: none;
+  width: 100px;
+  height: 100px;
 `;
 
 const PreviewImageContainer = styled.div`
-  /* position: relative; */
+  display: flex;
+  height: 120px;
 `;
 
 const PreviewImage = styled.img`
-  width: 160px;
-  height: 120px;
+  width: 120px;
+  height: 100%;
   margin: 0 5px;
 `;
 
@@ -88,6 +151,10 @@ const RegisterTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const ImageCount = styled.span`
+  color: ${palette.darkGray};
 `;
 
 const RegisterSubTitle = styled.div`
