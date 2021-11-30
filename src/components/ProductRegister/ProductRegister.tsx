@@ -8,7 +8,6 @@ const IMAGE_MAX_COUNT = 5;
 const ProductRegister = () => {
   const [images, setImages] = useState([]);
 
-  // 추후에 이미지 압축 구현 browser-image-compression
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.files);
     const nowSelectImageList = e.target.files;
@@ -69,12 +68,17 @@ const ProductRegister = () => {
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>가격</RegisterTitle>
-          <RegisterInput type="text" placeholder="숫자만 입력해주세요" />
+          <RegisterInput type="number" placeholder="숫자만 입력해주세요" />
+          <RegisterSubTitle>원</RegisterSubTitle>
+        </RegisterItem>
+        <RegisterItem>
+          <RegisterTitle>배송비</RegisterTitle>
+          <RegisterInput type="number" placeholder="숫자만 입력해주세요" />
           <RegisterSubTitle>원</RegisterSubTitle>
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>배송 시작일</RegisterTitle>
-          <RegisterInput type="text" placeholder="숫자만 입력해주세요" />
+          <RegisterInput type="number" placeholder="숫자만 입력해주세요" />
           <RegisterSubTitle>일 이내</RegisterSubTitle>
         </RegisterItem>
         <RegisterItem>
@@ -94,6 +98,11 @@ const ProductRegister = () => {
 const RegisterPage = styled.div`
   max-width: 1020px;
   margin: 0 auto;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const RegisterWrapper = styled.div`
