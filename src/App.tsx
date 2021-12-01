@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
-import { JoinPage, LoginPage, MainPage } from './pages';
+import { JoinPage, LoginPage, MainPage, ProductDetailPage } from './pages';
 import GlobalStyle from './styles/globalStyles';
 import ProductRegisterPage from './pages/ProductRegisterPage';
 
@@ -15,6 +15,8 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/join" component={JoinPage} />
         <Route path="/product-register" component={ProductRegisterPage} />
+        <Route path="/products" component={ProductDetailPage} />
+        {/* <Route path="/chatting" component={ChattingPage} /> */}
       </Switch>
     </BrowserRouter>
   );

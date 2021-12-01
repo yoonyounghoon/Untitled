@@ -1,5 +1,8 @@
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { requestAddProduct } from '../../api/product';
+import useInput from '../../hooks/useInput';
+import useTextArea from '../../hooks/useTextaArea';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 import Chip from '../common/Chip';
@@ -9,12 +12,22 @@ const TAG_MAX_COUNT = 5;
 
 const ProductRegister = () => {
   const [images, setImages] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[] | []>([]);
   const [tagName, setTagName] = useState<string>('');
-  const [tagArr, setTagArr] = useState<string[] | []>([]);
+
+  const {
+    inputValue: productName,
+    setValueOnChange: setProductName,
+  } = useInput();
+  const { inputValue: category, setValueOnChange: setCategory } = useInput();
+  const { inputValue: price, setValueOnChange: setPrice } = useInput();
+  const { inputValue: shipFee, setValueOnChange: setShipFee } = useInput();
+  const { inputValue: shipStart, setValueOnChange: setShipStart } = useInput();
+  const { inputValue: content, setValueOnChange: setContent } = useTextArea();
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nowSelectImageList = e.target.files;
-    const nowImageList = [...images]; // 기존 이미지들
+    const nowImageList = [...images];
 
     if (images.length === IMAGE_MAX_COUNT) {
       alert('이미지 개수 초과');
@@ -31,39 +44,57 @@ const ProductRegister = () => {
   };
 
   const handleDeleteTag = (clickTag: string) => {
-    const nowTags = tagArr.filter((tag) => tag !== clickTag);
-    setTagArr(nowTags);
+    const nowTags = tags.filter((tag) => tag !== clickTag);
+    setTags(nowTags);
   };
-
-  const tagItems = tagArr?.map((tag) => (
-    <TagItem key={tag}>
-      <Chip onDelete={() => handleDeleteTag(tag)}>{tag}</Chip>
-    </TagItem>
-  ));
 
   const handleTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newTag = e.target.value.replace(/\s/g, '');
     setTagName(newTag);
   };
 
+  const tagItems = tags?.map((tag) => (
+    <TagItem key={tag}>
+      <Chip onDelete={() => handleDeleteTag(tag)}>{tag}</Chip>
+    </TagItem>
+  ));
+
   const onKeyUp = useCallback(
     (e) => {
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        if (tagArr.length >= TAG_MAX_COUNT) {
+        if (tags.length >= TAG_MAX_COUNT) {
           alert('태그 개수 초과');
           return;
         }
         const newTag = tagName;
-        setTagArr((prevState) => [...prevState, newTag]);
+        setTags((prevState) => [...prevState, newTag]);
         setTagName('');
       }
     },
-    [tagName, tagArr],
+    [tagName, tags],
   );
+  const accessToken = 'sdsa';
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await requestAddProduct(
+      {
+        images,
+        productName,
+        category,
+        price,
+        shipFee,
+        shipStart,
+        tags,
+        content,
+      },
+      accessToken,
+    );
+  };
 
   return (
     <RegisterPage>
-      <RegisterWrapper>
+      <RegisterWrapper onSubmit={onSubmit}>
         <RegisterItem>
           <RegisterTitle>
             상품 이미지 &nbsp;
@@ -95,25 +126,50 @@ const ProductRegister = () => {
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>상품명</RegisterTitle>
-          <RegisterInput type="text" placeholder="상품명을 입력해주세요" />
+          <RegisterInput
+            type="text"
+            value={productName}
+            onChange={setProductName}
+            placeholder="상품명을 입력해주세요"
+          />
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>카테고리</RegisterTitle>
-          <RegisterInput type="text" placeholder="카테고리를 입력해주세요" />
+          <RegisterInput
+            type="text"
+            value={category}
+            onChange={setCategory}
+            placeholder="카테고리를 입력해주세요"
+          />
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>가격</RegisterTitle>
-          <RegisterInput type="number" placeholder="숫자만 입력해주세요" />
+          <RegisterInput
+            type="number"
+            value={price}
+            onChange={setPrice}
+            placeholder="숫자만 입력해주세요"
+          />
           <RegisterSubTitle>원</RegisterSubTitle>
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>배송비</RegisterTitle>
-          <RegisterInput type="number" placeholder="숫자만 입력해주세요" />
+          <RegisterInput
+            type="number"
+            value={shipFee}
+            onChange={setShipFee}
+            placeholder="숫자만 입력해주세요"
+          />
           <RegisterSubTitle>원</RegisterSubTitle>
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>배송 시작일</RegisterTitle>
-          <RegisterInput type="number" placeholder="숫자만 입력해주세요" />
+          <RegisterInput
+            type="number"
+            value={shipStart}
+            onChange={setShipStart}
+            placeholder="숫자만 입력해주세요"
+          />
           <RegisterSubTitle>일 이내</RegisterSubTitle>
         </RegisterItem>
         <RegisterItem style={{ height: '40px' }}>
@@ -130,7 +186,11 @@ const ProductRegister = () => {
         </RegisterItem>
         <RegisterItem>
           <RegisterTitle>설명</RegisterTitle>
-          <RegisterTextArea placeholder="상품 설명을 입력해주세요." />
+          <RegisterTextArea
+            value={content}
+            onChange={setContent}
+            placeholder="상품 설명을 입력해주세요."
+          />
         </RegisterItem>
         <ButtonWrapper>
           <Button className="register-button" size="medium">
@@ -152,7 +212,7 @@ const RegisterPage = styled.div`
   }
 `;
 
-const RegisterWrapper = styled.div`
+const RegisterWrapper = styled.form`
   display: flex;
   flex-direction: column;
 `;
