@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
+import Chip from '../common/Chip';
 
 const IMAGE_MAX_COUNT = 5;
+const TAG_MAX_COUNT = 5;
 
 const ProductRegister = () => {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<string[]>([]);
+  const [tagName, setTagName] = useState<string>('');
+  const [tagArr, setTagArr] = useState<string[] | []>([]);
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
     const nowSelectImageList = e.target.files;
     const nowImageList = [...images]; // 기존 이미지들
 
@@ -17,6 +20,7 @@ const ProductRegister = () => {
       alert('이미지 개수 초과');
       return;
     }
+
     for (let i = 0; i < nowSelectImageList.length; i++) {
       const nowImgUrl = URL.createObjectURL(nowSelectImageList[i]);
       nowImageList.push(nowImgUrl);
@@ -25,6 +29,37 @@ const ProductRegister = () => {
     setImages(nowImageList);
     console.log(images);
   };
+
+  const handleDeleteTag = (clickTag: string) => {
+    const nowTags = tagArr.filter((tag) => tag !== clickTag);
+    setTagArr(nowTags);
+  };
+
+  const tagItems = tagArr?.map((tag) => (
+    <TagItem key={tag}>
+      <Chip onDelete={() => handleDeleteTag(tag)}>{tag}</Chip>
+    </TagItem>
+  ));
+
+  const handleTag = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let newTag = e.target.value.replace(/\s/g, '');
+    setTagName(newTag);
+  };
+
+  const onKeyUp = useCallback(
+    (e) => {
+      if (e.keyCode === 13 && e.target.value.trim() !== '') {
+        if (tagArr.length >= TAG_MAX_COUNT) {
+          alert('태그 개수 초과');
+          return;
+        }
+        const newTag = tagName;
+        setTagArr((prevState) => [...prevState, newTag]);
+        setTagName('');
+      }
+    },
+    [tagName, tagArr],
+  );
 
   return (
     <RegisterPage>
@@ -81,6 +116,18 @@ const ProductRegister = () => {
           <RegisterInput type="number" placeholder="숫자만 입력해주세요" />
           <RegisterSubTitle>일 이내</RegisterSubTitle>
         </RegisterItem>
+        <RegisterItem style={{ height: '40px' }}>
+          <RegisterTitle>연관태그</RegisterTitle>
+          <RegisterInput
+            type="text"
+            name="input-tag"
+            value={tagName}
+            placeholder="입력하고 Enter  (최대 5개)"
+            onKeyUp={onKeyUp}
+            onChange={handleTag}
+          />
+          <TagWrapper>{tagItems}</TagWrapper>
+        </RegisterItem>
         <RegisterItem>
           <RegisterTitle>설명</RegisterTitle>
           <RegisterTextArea placeholder="상품 설명을 입력해주세요." />
@@ -128,9 +175,7 @@ const Label = styled.label`
   cursor: pointer;
 `;
 
-const LabelText = styled.span`
-  margin: 0 0 0.3rem 0.4rem;
-`;
+const LabelText = styled.span``;
 
 const InputElement = styled.input`
   display: none;
@@ -174,6 +219,17 @@ const RegisterSubTitle = styled.div`
 `;
 
 const RegisterInput = styled.input``;
+
+const TagWrapper = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+`;
+
+const TagItem = styled.li`
+  margin-right: 12px;
+`;
 
 const RegisterTextArea = styled.textarea`
   width: 100%;
