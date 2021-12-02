@@ -6,6 +6,7 @@ import useTextArea from '../../hooks/useTextaArea';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 import Chip from '../common/Chip';
+import { Input } from '../common/Input';
 
 const IMAGE_MAX_COUNT = 5;
 const TAG_MAX_COUNT = 5;
@@ -124,54 +125,39 @@ const ProductRegister = () => {
             </PreviewImageContainer>
           </FileUploadContainer>
         </RegisterItem>
-        <RegisterItem>
-          <RegisterTitle>상품명</RegisterTitle>
-          <RegisterInput
-            type="text"
-            value={productName}
-            onChange={setProductName}
-            placeholder="상품명을 입력해주세요"
-          />
-        </RegisterItem>
-        <RegisterItem>
-          <RegisterTitle>카테고리</RegisterTitle>
-          <RegisterInput
-            type="text"
-            value={category}
-            onChange={setCategory}
-            placeholder="카테고리를 입력해주세요"
-          />
-        </RegisterItem>
-        <RegisterItem>
-          <RegisterTitle>가격</RegisterTitle>
-          <RegisterInput
-            type="number"
-            value={price}
-            onChange={setPrice}
-            placeholder="숫자만 입력해주세요"
-          />
-          <RegisterSubTitle>원</RegisterSubTitle>
-        </RegisterItem>
-        <RegisterItem>
-          <RegisterTitle>배송비</RegisterTitle>
-          <RegisterInput
-            type="number"
-            value={shipFee}
-            onChange={setShipFee}
-            placeholder="숫자만 입력해주세요"
-          />
-          <RegisterSubTitle>원</RegisterSubTitle>
-        </RegisterItem>
-        <RegisterItem>
-          <RegisterTitle>배송 시작일</RegisterTitle>
-          <RegisterInput
-            type="number"
-            value={shipStart}
-            onChange={setShipStart}
-            placeholder="숫자만 입력해주세요"
-          />
-          <RegisterSubTitle>일 이내</RegisterSubTitle>
-        </RegisterItem>
+        <Input label="상품명" placeholder="상품명을 입력해주세요" type="text" />
+        {/* value={productName}  onChange={setProductName} */}
+
+        <Input
+          label="카테고리"
+          placeholder="카테고리를 입력해주세요"
+          type="text"
+        />
+        {/* value={category} onChange={setCategory */}
+
+        <Input
+          label="가격"
+          placeholder="숫자만 입력해주세요"
+          type="number"
+          behindText="원"
+        />
+        {/* value={price}  onChange={setPrice} */}
+
+        <Input
+          label="배송비"
+          placeholder="숫자만 입력해주세요"
+          type="number"
+          behindText="원"
+        />
+        {/* value={shipFee} onChange={setShipFee}  */}
+        <Input
+          label="배송 시작일"
+          placeholder="숫자만 입력해주세요"
+          type="number"
+          behindText="일 이내"
+        />
+        {/* value={shipStart} onChange={setShipStart} */}
+
         <RegisterItem style={{ height: '40px' }}>
           <RegisterTitle>연관태그</RegisterTitle>
           <RegisterInput
@@ -184,6 +170,7 @@ const ProductRegister = () => {
           />
           <TagWrapper>{tagItems}</TagWrapper>
         </RegisterItem>
+
         <RegisterItem>
           <RegisterTitle>설명</RegisterTitle>
           <RegisterTextArea
@@ -260,7 +247,7 @@ const RegisterItem = styled.div`
   margin: 15px 0;
 `;
 
-const RegisterTitle = styled.div`
+const RegisterTitle = styled.label`
   min-width: 200px;
   display: flex;
   justify-content: center;
@@ -269,13 +256,6 @@ const RegisterTitle = styled.div`
 
 const ImageCount = styled.span`
   color: ${palette.darkGray};
-`;
-
-const RegisterSubTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
 `;
 
 const RegisterInput = styled.input``;
