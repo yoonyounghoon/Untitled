@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginAPI } from '../../api/user';
+import { loginAPI } from '../../api/auth';
 
 type formState = {
   id: string;
