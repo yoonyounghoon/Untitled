@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { JoinForm } from '../components/auth/Join/useJoin';
 import { AUTH_URL } from '../lib/constants';
+import { loginState } from '../modules/Login/reducer';
 interface Flag {
   code: string;
   data: {
@@ -30,7 +31,7 @@ const auth = axios.create({
 });
 
 export const loginAPI = async (id: string, password: string) => {
-  const response = await auth.post('/login', {
+  const response: AxiosResponse<loginState> = await auth.post('/login', {
     userid: id,
     password,
   });

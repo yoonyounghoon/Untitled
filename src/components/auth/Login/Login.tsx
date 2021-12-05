@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useLogin from '../../hooks/useLogin';
-import Button from '../common/Button';
+import Button from '../../common/Button';
+import useLogin from './useLogin';
 
-type LoginProps = {};
-
-function Login({}: LoginProps) {
-  const { onChange, onSubmit } = useLogin();
+function Login() {
+  const { onChangeId, onChangePassword, onSubmit } = useLogin();
 
   return (
     <LoginBlock>
@@ -16,14 +14,14 @@ function Login({}: LoginProps) {
         <LoginInput
           type="text"
           placeholder="아이디를 입력해주세요"
-          name="id"
-          onChange={onChange}
+          id="id"
+          onChange={onChangeId}
         />
         <LoginInput
           type="password"
           placeholder="비밀번호를 입력해주세요"
-          name="password"
-          onChange={onChange}
+          id="password"
+          onChange={onChangePassword}
         />
         <FindWrap>
           <StyledLink to="#">아이디 찾기</StyledLink>
