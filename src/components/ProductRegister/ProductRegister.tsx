@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { requestAddProduct } from '../../api/product';
 import useInput from '../../hooks/useInput';
-import useTextArea from '../../hooks/useTextaArea';
+import useTextArea from '../../hooks/useTextArea';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 import Chip from '../common/Chip';

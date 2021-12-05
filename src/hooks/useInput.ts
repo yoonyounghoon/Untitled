@@ -10,7 +10,11 @@ const useInput = (initialValue: string) => {
     setInputValue(value);
   };
 
-  return [inputValue, setValueOnChange, setInputValue];
+  return [inputValue, setValueOnChange, setInputValue] as [
+    string,
+    typeof setValueOnChange,
+    typeof setInputValue,
+  ];
 };
 
 export default useInput;
