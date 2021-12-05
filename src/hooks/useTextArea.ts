@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-const useInput = (initialValue: string) => {
+const useTextArea = (initialValue: string) => {
   const [inputValue, setInputValue] = useState(initialValue);
 
-  const setValueOnChange: React.ChangeEventHandler<HTMLInputElement> = ({
+  const setValueOnChange: React.ChangeEventHandler<HTMLTextAreaElement> = ({
     target,
   }) => {
     const { value } = target;
@@ -17,4 +17,4 @@ const useInput = (initialValue: string) => {
   ];
 };
 
-export default useInput;
+export default useTextArea;

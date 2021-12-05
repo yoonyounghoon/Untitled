@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { requestAddProduct } from '../../api/product';
 import useInput from '../../hooks/useInput';
-import useTextArea from '../../hooks/useTextaArea';
+import useTextArea from '../../hooks/useTextArea';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 import Chip from '../common/Chip';
@@ -16,15 +16,12 @@ const ProductRegister = () => {
   const [tags, setTags] = useState<string[] | []>([]);
   const [tagName, setTagName] = useState<string>('');
 
-  const {
-    inputValue: productName,
-    setValueOnChange: setProductName,
-  } = useInput();
-  const { inputValue: category, setValueOnChange: setCategory } = useInput();
-  const { inputValue: price, setValueOnChange: setPrice } = useInput();
-  const { inputValue: shipFee, setValueOnChange: setShipFee } = useInput();
-  const { inputValue: shipStart, setValueOnChange: setShipStart } = useInput();
-  const { inputValue: content, setValueOnChange: setContent } = useTextArea();
+  const [productName, setProductName] = useInput('');
+  const [category, setCategory] = useInput('');
+  const [price, setPrice] = useInput('');
+  const [shipFee, setShipFee] = useInput('');
+  const [shipStart, setShipStart] = useInput('');
+  const [content, setContent] = useTextArea('');
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nowSelectImageList = e.target.files;
