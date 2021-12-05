@@ -54,13 +54,7 @@ export const login = createAsyncThunk(
 const loginSlice = createSlice({
   name: 'loginReducer',
   initialState,
-  reducers: {
-    SetUser: (state, action) => {
-      console.log('setUser');
-      state.token = action.payload;
-      state.isSuccess = true;
-    },
-  },
+  reducers: {},
   extraReducers: {
     [login.pending.type]: (state, action) => {
       console.log('로그인 요청 시작');
@@ -77,7 +71,5 @@ const loginSlice = createSlice({
     },
   },
 });
-
-export const { SetUser } = loginSlice.actions;
 
 export default loginSlice.reducer;
