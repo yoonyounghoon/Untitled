@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const useInput = () => {
-  const [inputValue, setInputValue] = useState('');
+const useInput = (initialValue: string) => {
+  const [inputValue, setInputValue] = useState(initialValue);
 
   const setValueOnChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target,
@@ -10,7 +10,7 @@ const useInput = () => {
     setInputValue(value);
   };
 
-  return { inputValue, setValueOnChange, setInputValue };
+  return [inputValue, setValueOnChange, setInputValue];
 };
 
 export default useInput;
