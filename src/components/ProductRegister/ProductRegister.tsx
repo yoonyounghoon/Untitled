@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { requestAddProduct } from '../../api/product';
 import useInput from '../../hooks/useInput';
 import useTextArea from '../../hooks/useTextArea';
 import palette from '../../styles/palette';
+import { hasDuplicated, isValidImageLength } from '../../utils/postUpload';
 import Button from '../common/Button';
 import Chip from '../common/Chip';
 import { Input } from '../common/Input';
@@ -23,11 +24,15 @@ const ProductRegister = () => {
   const [shipStart, setShipStart] = useInput('');
   const [content, setContent] = useTextArea('');
 
+  useEffect(() => {
+    preventEnterEvent();
+  }, []);
+
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nowSelectImageList = e.target.files;
     const nowImageList = [...images];
 
-    if (images.length === IMAGE_MAX_COUNT) {
+    if (isValidImageLength(nowImageList)) {
       alert('이미지 개수 초과');
       return;
     }
@@ -57,11 +62,28 @@ const ProductRegister = () => {
     </TagItem>
   ));
 
+  const preventEnterEvent = () => {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach((input) =>
+      input.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          return false;
+        }
+      }),
+    );
+  };
+
   const onKeyUp = useCallback(
     (e) => {
+      const nowTag = e.target.value;
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
         if (tags.length >= TAG_MAX_COUNT) {
           alert('태그 개수 초과');
+          return;
+        }
+        if (hasDuplicated([...tags, nowTag])) {
+          alert('중복 태그');
           return;
         }
         const newTag = tagName;
@@ -122,41 +144,48 @@ const ProductRegister = () => {
             </PreviewImageContainer>
           </FileUploadContainer>
         </RegisterItem>
-        <Input label="상품명" placeholder="상품명을 입력해주세요" type="text" />
-        {/* value={productName}  onChange={setProductName} */}
+
+        <Input
+          label="상품명"
+          placeholder="상품명을 입력해주세요"
+          type="text"
+          onChange={(e) => setProductName(e)}
+        />
 
         <Input
           label="카테고리"
           placeholder="카테고리를 입력해주세요"
           type="text"
+          onChange={(e) => setCategory(e)}
         />
-        {/* value={category} onChange={setCategory */}
 
         <Input
           label="가격"
           placeholder="숫자만 입력해주세요"
           type="number"
           behindText="원"
+          onChange={setPrice}
         />
-        {/* value={price}  onChange={setPrice} */}
 
         <Input
           label="배송비"
           placeholder="숫자만 입력해주세요"
           type="number"
           behindText="원"
+          onChange={(e) => setShipFee(e)}
         />
-        {/* value={shipFee} onChange={setShipFee}  */}
+
         <Input
           label="배송 시작일"
           placeholder="숫자만 입력해주세요"
           type="number"
           behindText="일 이내"
+          onChange={(e) => setShipStart(e)}
         />
-        {/* value={shipStart} onChange={setShipStart} */}
 
         <RegisterItem style={{ height: '40px' }}>
           <RegisterTitle>연관태그</RegisterTitle>
+
           <RegisterInput
             type="text"
             name="input-tag"
@@ -177,7 +206,7 @@ const ProductRegister = () => {
           />
         </RegisterItem>
         <ButtonWrapper>
-          <Button className="register-button" size="medium">
+          <Button className="register-button" size="medium" type="submit">
             상품 등록
           </Button>
         </ButtonWrapper>

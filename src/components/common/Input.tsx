@@ -5,6 +5,7 @@ export interface Props {
   type?: 'text' | 'number';
   placeholder?: string;
   behindText?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export const Input = ({
@@ -12,12 +13,18 @@ export const Input = ({
   type,
   placeholder,
   behindText,
+  onChange,
   ...props
 }: Props) => {
   return (
     <Label>
       {label && <LabelText>{label}</LabelText>}
-      <InputText type={type} placeholder={placeholder} />
+      <InputText
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+        {...props}
+      />
       {behindText && <BehindText>{behindText}</BehindText>}
     </Label>
   );
