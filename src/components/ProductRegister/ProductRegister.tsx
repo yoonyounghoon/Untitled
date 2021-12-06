@@ -4,7 +4,11 @@ import { requestAddProduct } from '../../api/product';
 import useInput from '../../hooks/useInput';
 import useTextArea from '../../hooks/useTextArea';
 import palette from '../../styles/palette';
-import { hasDuplicated, isValidImageLength } from '../../utils/postUpload';
+import {
+  hasDuplicated,
+  isValidImageLength,
+  isValidTagLength,
+} from '../../utils/postUpload';
 import Button from '../common/Button';
 import Chip from '../common/Chip';
 import { Input } from '../common/Input';
@@ -77,8 +81,9 @@ const ProductRegister = () => {
   const onKeyUp = useCallback(
     (e) => {
       const nowTag = e.target.value;
+      const nowTagList = [...tags];
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        if (tags.length >= TAG_MAX_COUNT) {
+        if (isValidTagLength(nowTagList)) {
           alert('태그 개수 초과');
           return;
         }
