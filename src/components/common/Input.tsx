@@ -1,11 +1,11 @@
 import styled from 'styled-components';
+import { InputHTMLAttributes } from 'react';
 
-export interface Props {
+export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   type?: 'text' | 'number';
   placeholder?: string;
   behindText?: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export const Input = ({
@@ -13,18 +13,12 @@ export const Input = ({
   type,
   placeholder,
   behindText,
-  onChange,
   ...props
 }: Props) => {
   return (
     <Label>
       {label && <LabelText>{label}</LabelText>}
-      <InputText
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        {...props}
-      />
+      <InputText type={type} placeholder={placeholder} {...props} />
       {behindText && <BehindText>{behindText}</BehindText>}
     </Label>
   );
