@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { requestAddProduct } from '../../api/product';
+import { AddProductApi } from '../../api/product';
 import useInput from '../../hooks/useInput';
 import useTextArea from '../../hooks/useTextArea';
 import palette from '../../styles/palette';
+import Button from '../common/Button';
+import Chip from '../common/Chip';
+import { Input } from '../common/Input';
 import {
   hasDuplicated,
   isValidImageLength,
   isValidTagLength,
 } from '../../utils/postUpload';
-import Button from '../common/Button';
-import Chip from '../common/Chip';
-import { Input } from '../common/Input';
 
 const IMAGE_MAX_COUNT = 5;
 const TAG_MAX_COUNT = 5;
@@ -20,7 +20,6 @@ const ProductRegister = () => {
   const [images, setImages] = useState<string[]>([]);
   const [tags, setTags] = useState<string[] | []>([]);
   const [tagName, setTagName] = useState<string>('');
-
   const [productName, setProductName] = useInput('');
   const [category, setCategory] = useInput('');
   const [price, setPrice] = useInput('');
@@ -37,7 +36,7 @@ const ProductRegister = () => {
     const nowImageList = [...images];
 
     if (isValidImageLength(nowImageList)) {
-      alert('이미지 개수 초과');
+      alert('이미지 개수 초과입니다');
       return;
     }
 
@@ -84,11 +83,11 @@ const ProductRegister = () => {
       const nowTagList = [...tags];
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
         if (isValidTagLength(nowTagList)) {
-          alert('태그 개수 초과');
+          alert('태그 개수 초과입니다');
           return;
         }
         if (hasDuplicated([...tags, nowTag])) {
-          alert('중복 태그');
+          alert('중복 태그입니다');
           return;
         }
         const newTag = tagName;
@@ -98,12 +97,11 @@ const ProductRegister = () => {
     },
     [tagName, tags],
   );
-  const accessToken = 'sdsa';
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    await requestAddProduct(
-      {
+    try {
+      const response = await AddProductApi({
         images,
         productName,
         category,
@@ -112,9 +110,13 @@ const ProductRegister = () => {
         shipStart,
         tags,
         content,
-      },
-      accessToken,
-    );
+      });
+      if (response.status === 200) {
+        console.log('상품등록 성공');
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -123,10 +125,10 @@ const ProductRegister = () => {
         <RegisterItem>
           <RegisterTitle>
             상품 이미지 &nbsp;
-            <ImageCount>
+            <Count>
               {images.length}
               {`/${IMAGE_MAX_COUNT}`}
-            </ImageCount>
+            </Count>
           </RegisterTitle>
 
           <FileUploadContainer>
@@ -189,7 +191,13 @@ const ProductRegister = () => {
         />
 
         <RegisterItem style={{ height: '40px' }}>
-          <RegisterTitle>연관태그</RegisterTitle>
+          <RegisterTitle>
+            연관태그 &nbsp;
+            <Count>
+              {tags.length}
+              {`/${TAG_MAX_COUNT}`}
+            </Count>
+          </RegisterTitle>
 
           <RegisterInput
             type="text"
@@ -285,7 +293,7 @@ const RegisterTitle = styled.label`
   align-items: center;
 `;
 
-const ImageCount = styled.span`
+const Count = styled.span`
   color: ${palette.darkGray};
 `;
 
