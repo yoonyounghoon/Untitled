@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { AddProductApi } from '../../api/product';
-import useInput from '../../hooks/useInput';
 import useTextArea from '../../hooks/useTextArea';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 import Chip from '../common/Chip';
+import { AddProductApi } from '../../api/product';
 import { Input } from '../common/Input';
+import useInput from '../../hooks/useInput';
+import useSelect from '../../hooks/useSelect';
 import {
   hasDuplicated,
   isValidImageLength,
@@ -21,7 +22,7 @@ const ProductRegister = () => {
   const [tags, setTags] = useState<string[] | []>([]);
   const [tagName, setTagName] = useState<string>('');
   const [productName, setProductName] = useInput('');
-  const [category, setCategory] = useInput('');
+  const [category, setCategory] = useSelect();
   const [price, setPrice] = useInput('');
   const [shipFee, setShipFee] = useInput('');
   const [shipStart, setShipStart] = useInput('');
@@ -119,6 +120,17 @@ const ProductRegister = () => {
     }
   };
 
+  const CATEGORY = [
+    '전체',
+    '유리공예품',
+    '조각품',
+    '금속공예품',
+    '음식',
+    '한식',
+    '양식',
+    '수채화',
+  ];
+
   return (
     <RegisterPage>
       <RegisterWrapper onSubmit={onSubmit}>
@@ -158,13 +170,16 @@ const ProductRegister = () => {
           type="text"
           onChange={(e) => setProductName(e)}
         />
-
-        <Input
-          label="카테고리"
-          placeholder="카테고리를 입력해주세요"
-          type="text"
-          onChange={(e) => setCategory(e)}
-        />
+        <RegisterItem>
+          <RegisterTitle>카테고리</RegisterTitle>
+          <SelectBlock onChange={(e) => setCategory(e)}>
+            {CATEGORY.map((name, index) => (
+              <option key={index} value={index}>
+                {name}
+              </option>
+            ))}
+          </SelectBlock>
+        </RegisterItem>
 
         <Input
           label="가격"
@@ -295,6 +310,12 @@ const RegisterTitle = styled.label`
 
 const Count = styled.span`
   color: ${palette.darkGray};
+`;
+
+const SelectBlock = styled.select`
+  padding: 0.75rem 1.25rem;
+  border: 1px solid ${palette.grey};
+  outline: none;
 `;
 
 const RegisterInput = styled.input``;
