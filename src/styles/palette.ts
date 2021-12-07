@@ -3,6 +3,7 @@ const palette = {
   grey: '#5A5D5A',
   darkGray: '	#A9A9A9',
   brightGrey: '#BFC6D0',
+  lightGrey: 'rgba(0,0,0,0.1)',
   white: '#F3F3F3',
   red: '#ED4C67',
   purple: '#9980FA',

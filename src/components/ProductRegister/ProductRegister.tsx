@@ -222,9 +222,11 @@ const ProductRegister = () => {
             onKeyUp={onKeyUp}
             onChange={handleTag}
           />
+        </RegisterItem>
+        <RegisterItem>
+          <RegisterTitle></RegisterTitle>
           <TagWrapper>{tagItems}</TagWrapper>
         </RegisterItem>
-
         <RegisterItem>
           <RegisterTitle>설명</RegisterTitle>
           <RegisterTextArea
@@ -244,8 +246,9 @@ const ProductRegister = () => {
 };
 
 const RegisterPage = styled.div`
-  max-width: 1020px;
-  margin: 0 auto;
+  width: 50rem;
+  margin: auto;
+  padding: 4.5rem 5.4375rem;
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -272,7 +275,7 @@ const Label = styled.label`
   justify-content: center;
   align-items: center;
   color: ${palette.purple};
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: ${palette.lightGrey};
   cursor: pointer;
 `;
 
@@ -314,11 +317,22 @@ const Count = styled.span`
 
 const SelectBlock = styled.select`
   padding: 0.75rem 1.25rem;
-  border: 1px solid ${palette.grey};
+  border: none;
   outline: none;
+  background-color: #f6f8fa;
 `;
 
-const RegisterInput = styled.input``;
+const RegisterInput = styled.input`
+  width: 100%;
+  height: 3.375rem;
+  padding: 0 1.2rem;
+  background-color: #f6f8fa;
+  border: none;
+  outline: none;
+  ::placeholder {
+    color: #8492a6;
+  }
+`;
 
 const TagWrapper = styled.ul`
   display: flex;
@@ -334,6 +348,13 @@ const TagItem = styled.li`
 const RegisterTextArea = styled.textarea`
   width: 100%;
   min-height: 120px;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  background-color: #f6f8fa;
+  ::placeholder {
+    color: #8492a6;
+  }
 `;
 
 const ButtonWrapper = styled.div`

@@ -30,7 +30,17 @@ const Label = styled.label`
   margin: 15px 0;
 `;
 
-const InputText = styled.input``;
+const InputText = styled.input`
+  width: 100%;
+  height: 3.375rem;
+  padding: 0px 19px;
+  background-color: #f6f8fa;
+  border: none;
+  outline: none;
+  ::placeholder {
+    color: #8492a6;
+  }
+`;
 
 const LabelText = styled.span`
   min-width: 200px;
@@ -40,6 +50,7 @@ const LabelText = styled.span`
 `;
 
 const BehindText = styled.div`
+  min-width: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
