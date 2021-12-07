@@ -148,6 +148,7 @@ const ProductRegister = () => {
               <LabelText>+</LabelText>
               <InputElement
                 type="file"
+                accept="image/*"
                 onChange={handleUploadImage}
               ></InputElement>
             </Label>
@@ -205,7 +206,7 @@ const ProductRegister = () => {
           onChange={(e) => setShipStart(e)}
         />
 
-        <RegisterItem style={{ height: '40px' }}>
+        <RegisterItem>
           <RegisterTitle>
             연관태그 &nbsp;
             <Count>
@@ -223,7 +224,7 @@ const ProductRegister = () => {
             onChange={handleTag}
           />
         </RegisterItem>
-        <RegisterItem>
+        <RegisterItem style={{ display: 'inline-block' }}>
           <RegisterTitle></RegisterTitle>
           <TagWrapper>{tagItems}</TagWrapper>
         </RegisterItem>
