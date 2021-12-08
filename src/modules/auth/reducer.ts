@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loginAPI } from '../../api/auth';
+import { RootState } from '../store';
 
 type loginProps = {
   id: string;
@@ -9,7 +10,7 @@ type loginProps = {
 export type loginState = {
   token: string;
   isSuccess: boolean;
-  user: {
+  user: null | {
     userid: string;
     username: string;
     email: string;
@@ -27,32 +28,22 @@ export type loginState = {
 const initialState: loginState = {
   token: '',
   isSuccess: false,
-  user: {
-    userid: '',
-    username: '',
-    email: '',
-    imageUrl: '',
-    phoneNumber: '',
-    certificationStatus: '',
-    role: '',
-    address: {
-      address: '',
-      detailAddress: '',
-    },
-  },
+  user: null,
 };
 
 export const login = createAsyncThunk(
   'login',
   async ({ id, password }: loginProps) => {
     const response = await loginAPI(id, password);
-    sessionStorage.setItem('token', response.headers['access-token']);
-    return response.data;
+    sessionStorage.setItem('accessToken', response.headers['access-token']);
+    return response;
   },
 );
 
-const loginSlice = createSlice({
-  name: 'loginReducer',
+export const logout = createAction('logout');
+
+const authSlice = createSlice({
+  name: 'authReducer',
   initialState,
   reducers: {},
   extraReducers: {
@@ -62,14 +53,21 @@ const loginSlice = createSlice({
     [login.fulfilled.type]: (state, action) => {
       console.log('성공');
       state.isSuccess = true;
-      state.user = action.payload.data;
+      state.user = action.payload.data.data;
+      state.token = action.payload.headers['access-token'];
     },
     [login.rejected.type]: (state, action) => {
-      console.log('rejected');
       console.log(action.error);
       alert('로그인에 실패하였습니다. 다시 시도해 주세요');
+    },
+    logout: (state, action) => {
+      state.token = '';
+      state.isSuccess = false;
+      state.user = null;
     },
   },
 });
 
-export default loginSlice.reducer;
+export const authSelector = (state: RootState) => state.auth;
+
+export default authSlice.reducer;

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { JoinForm } from '../components/auth/Join/useJoin';
 import { AUTH_URL } from '../lib/constants';
-import { loginState } from '../modules/Login/reducer';
+import { loginState } from '../modules/auth/reducer';
 interface Flag {
   code: string;
   data: {

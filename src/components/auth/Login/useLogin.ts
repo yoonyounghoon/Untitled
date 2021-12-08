@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import useInput from '../../../hooks/useInput';
-import { login } from '../../../modules/Login/reducer';
-import { RootState } from '../../../modules/store';
+import { authSelector, login } from '../../../modules/auth/reducer';
 
 function useLogin() {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const { isSuccess } = useSelector((state: RootState) => state.login);
+  const { isSuccess } = useSelector(authSelector);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -17,7 +16,7 @@ function useLogin() {
     if (isSuccess) {
       history.push('/');
     }
-  }, [isSuccess, history]);
+  }, [isSuccess]);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
