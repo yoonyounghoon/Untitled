@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useLogin from '../hooks/useLogin';
-import palette from '../styles/palette';
-import Button from './common/Button';
+import Button from '../../common/Button';
+import useLogin from './useLogin';
 
-type LoginProps = {};
-
-function Login({}: LoginProps) {
-  const { onChange, onSubmit } = useLogin();
+function Login() {
+  const { onChangeId, onChangePassword, onSubmit } = useLogin();
 
   return (
     <LoginBlock>
@@ -17,14 +14,14 @@ function Login({}: LoginProps) {
         <LoginInput
           type="text"
           placeholder="아이디를 입력해주세요"
-          name="email"
-          onChange={onChange}
+          id="id"
+          onChange={onChangeId}
         />
         <LoginInput
           type="password"
           placeholder="비밀번호를 입력해주세요"
-          name="password"
-          onChange={onChange}
+          id="password"
+          onChange={onChangePassword}
         />
         <FindWrap>
           <StyledLink to="#">아이디 찾기</StyledLink>
@@ -44,22 +41,20 @@ const LoginBlock = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  border: 1px solid #dbdbdb;
+  margin-top: 50px;
 `;
 
 const Title = styled.h2`
   margin: 0;
-  margin-bottom: 36px;
 `;
 
 const LoginForm = styled.form`
+  width: 400px;
   display: flex;
   flex-direction: column;
 `;
 
 const LoginInput = styled.input`
-  width: 680px;
   height: 54px;
   padding: 0px 19px;
   background-color: #f6f8fa;
@@ -78,7 +73,7 @@ const FindWrap = styled.div`
   display: flex;
   justify-content: right;
   margin-top: 30px;
-  margin-bottom: 164px;
+  margin-bottom: 80px;
 `;
 
 const StyledLink = styled(Link)`

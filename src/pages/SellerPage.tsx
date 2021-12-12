@@ -1,5 +1,4 @@
 import React from 'react';
-import ListGoods from '../components/list-goods/list-goodsPresenter';
 import SellerInfoList from '../components/SellerInfoList';
 import ReviewList from '../components/ReviewList';
 import styled from 'styled-components';
