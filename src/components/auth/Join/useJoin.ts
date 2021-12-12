@@ -7,7 +7,7 @@ import {
   checkNicknameAPI,
   joinAPI,
   sendEmailAPI,
-} from '../../../api/auth';
+} from '../../../api/user';
 import { EMAIL_AUTH_SUCCESS_CODE } from '../../../lib/constants';
 
 type responseCodesType = {

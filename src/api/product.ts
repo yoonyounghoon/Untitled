@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { RegisterUploadData } from '../types';
+import { auth } from './axios';
 
 export const requestAddProduct = async (
   {
@@ -14,9 +15,5 @@ export const requestAddProduct = async (
   }: RegisterUploadData,
   accessToken: string | null,
 ) => {
-  await axios.post('http://localhost8080', images, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  await auth.post('/products', images);
 };

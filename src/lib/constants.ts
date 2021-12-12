@@ -1,6 +1,4 @@
-export const PRODUCT_URL = 'https://graduprojects.herokuapp.com';
-export const AUTH_URL = 'https://gradu-test.herokuapp.com';
-
+export const BASE_URL = 'https://graduprojects.herokuapp.com';
 export const EMAIL_VALID_CODE = 'M101';
 export const EMAIL_INVALID_CODE = 'M107';
 
