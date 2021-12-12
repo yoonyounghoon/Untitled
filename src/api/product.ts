@@ -1,8 +1,25 @@
 import axios from 'axios';
+import { AUTH_URL } from '../lib/constants';
 import { RegisterUploadData } from '../types';
 
-export const requestAddProduct = async (
-  {
+const auth = axios.create({
+  baseURL: AUTH_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const AddProductApi = async ({
+  images,
+  productName,
+  category,
+  price,
+  shipFee,
+  shipStart,
+  tags,
+  content,
+}: RegisterUploadData) => {
+  const response = await auth.post('/products', {
     images,
     productName,
     category,
@@ -11,12 +28,6 @@ export const requestAddProduct = async (
     shipStart,
     tags,
     content,
-  }: RegisterUploadData,
-  accessToken: string | null,
-) => {
-  await axios.post('http://localhost8080', images, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   });
+  return response;
 };
