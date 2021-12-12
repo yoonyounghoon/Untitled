@@ -7,6 +7,7 @@ import {
   MainPage,
   ProductDetailPage,
   ProductRegisterPage,
+  SellerPage,
 } from './pages';
 import GlobalStyle from './styles/globalStyles';
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" exact component={MainPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/join" component={JoinPage} />
+        <Route path="/sellerInfo" component={SellerPage} />
         <Route path="/product-register" component={ProductRegisterPage} />
         <Route path="/products" component={ProductDetailPage} />
         {/* <Route path="/chatting" component={ChattingPage} /> */}
