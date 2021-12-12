@@ -1,9 +1,17 @@
-import axios from 'axios';
 import { RegisterUploadData } from '../types';
 import { auth } from './axios';
 
-export const requestAddProduct = async (
-  {
+export const AddProductApi = async ({
+  images,
+  productName,
+  category,
+  price,
+  shipFee,
+  shipStart,
+  tags,
+  content,
+}: RegisterUploadData) => {
+  const response = await auth.post('/products', {
     images,
     productName,
     category,
@@ -12,8 +20,6 @@ export const requestAddProduct = async (
     shipStart,
     tags,
     content,
-  }: RegisterUploadData,
-  accessToken: string | null,
-) => {
-  await auth.post('/products', images);
+  });
+  return response;
 };

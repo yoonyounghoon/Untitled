@@ -1,12 +1,18 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { requestAddProduct } from '../../api/product';
-import useInput from '../../hooks/useInput';
 import useTextArea from '../../hooks/useTextArea';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 import Chip from '../common/Chip';
+import { AddProductApi } from '../../api/product';
 import { Input } from '../common/Input';
+import useInput from '../../hooks/useInput';
+import useSelect from '../../hooks/useSelect';
+import {
+  hasDuplicated,
+  isValidImageLength,
+  isValidTagLength,
+} from '../../utils/postUpload';
 
 const IMAGE_MAX_COUNT = 5;
 const TAG_MAX_COUNT = 5;
@@ -15,20 +21,23 @@ const ProductRegister = () => {
   const [images, setImages] = useState<string[]>([]);
   const [tags, setTags] = useState<string[] | []>([]);
   const [tagName, setTagName] = useState<string>('');
-
   const [productName, setProductName] = useInput('');
-  const [category, setCategory] = useInput('');
+  const [category, setCategory] = useSelect();
   const [price, setPrice] = useInput('');
   const [shipFee, setShipFee] = useInput('');
   const [shipStart, setShipStart] = useInput('');
   const [content, setContent] = useTextArea('');
 
+  useEffect(() => {
+    preventEnterEvent();
+  }, []);
+
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nowSelectImageList = e.target.files;
     const nowImageList = [...images];
 
-    if (images.length === IMAGE_MAX_COUNT) {
-      alert('이미지 개수 초과');
+    if (isValidImageLength(nowImageList)) {
+      alert('이미지 개수 초과입니다');
       return;
     }
 
@@ -57,11 +66,29 @@ const ProductRegister = () => {
     </TagItem>
   ));
 
+  const preventEnterEvent = () => {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach((input) =>
+      input.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          return false;
+        }
+      }),
+    );
+  };
+
   const onKeyUp = useCallback(
     (e) => {
+      const nowTag = e.target.value;
+      const nowTagList = [...tags];
       if (e.keyCode === 13 && e.target.value.trim() !== '') {
-        if (tags.length >= TAG_MAX_COUNT) {
-          alert('태그 개수 초과');
+        if (isValidTagLength(nowTagList)) {
+          alert('태그 개수 초과입니다');
+          return;
+        }
+        if (hasDuplicated([...tags, nowTag])) {
+          alert('중복 태그입니다');
           return;
         }
         const newTag = tagName;
@@ -71,12 +98,11 @@ const ProductRegister = () => {
     },
     [tagName, tags],
   );
-  const accessToken = 'sdsa';
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    await requestAddProduct(
-      {
+    try {
+      const response = await AddProductApi({
         images,
         productName,
         category,
@@ -85,10 +111,25 @@ const ProductRegister = () => {
         shipStart,
         tags,
         content,
-      },
-      accessToken,
-    );
+      });
+      if (response.status === 200) {
+        console.log('상품등록 성공');
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  const CATEGORY = [
+    '전체',
+    '유리공예품',
+    '조각품',
+    '금속공예품',
+    '음식',
+    '한식',
+    '양식',
+    '수채화',
+  ];
 
   return (
     <RegisterPage>
@@ -96,10 +137,10 @@ const ProductRegister = () => {
         <RegisterItem>
           <RegisterTitle>
             상품 이미지 &nbsp;
-            <ImageCount>
+            <Count>
               {images.length}
               {`/${IMAGE_MAX_COUNT}`}
-            </ImageCount>
+            </Count>
           </RegisterTitle>
 
           <FileUploadContainer>
@@ -107,6 +148,7 @@ const ProductRegister = () => {
               <LabelText>+</LabelText>
               <InputElement
                 type="file"
+                accept="image/*"
                 onChange={handleUploadImage}
               ></InputElement>
             </Label>
@@ -122,41 +164,57 @@ const ProductRegister = () => {
             </PreviewImageContainer>
           </FileUploadContainer>
         </RegisterItem>
-        <Input label="상품명" placeholder="상품명을 입력해주세요" type="text" />
-        {/* value={productName}  onChange={setProductName} */}
 
         <Input
-          label="카테고리"
-          placeholder="카테고리를 입력해주세요"
+          label="상품명"
+          placeholder="상품명을 입력해주세요"
           type="text"
+          onChange={(e) => setProductName(e)}
         />
-        {/* value={category} onChange={setCategory */}
+        <RegisterItem>
+          <RegisterTitle>카테고리</RegisterTitle>
+          <SelectBlock onChange={(e) => setCategory(e)}>
+            {CATEGORY.map((name, index) => (
+              <option key={index} value={index}>
+                {name}
+              </option>
+            ))}
+          </SelectBlock>
+        </RegisterItem>
 
         <Input
           label="가격"
           placeholder="숫자만 입력해주세요"
           type="number"
           behindText="원"
+          onChange={setPrice}
         />
-        {/* value={price}  onChange={setPrice} */}
 
         <Input
           label="배송비"
           placeholder="숫자만 입력해주세요"
           type="number"
           behindText="원"
+          onChange={(e) => setShipFee(e)}
         />
-        {/* value={shipFee} onChange={setShipFee}  */}
+
         <Input
           label="배송 시작일"
           placeholder="숫자만 입력해주세요"
           type="number"
           behindText="일 이내"
+          onChange={(e) => setShipStart(e)}
         />
-        {/* value={shipStart} onChange={setShipStart} */}
 
-        <RegisterItem style={{ height: '40px' }}>
-          <RegisterTitle>연관태그</RegisterTitle>
+        <RegisterItem>
+          <RegisterTitle>
+            연관태그 &nbsp;
+            <Count>
+              {tags.length}
+              {`/${TAG_MAX_COUNT}`}
+            </Count>
+          </RegisterTitle>
+
           <RegisterInput
             type="text"
             name="input-tag"
@@ -165,9 +223,11 @@ const ProductRegister = () => {
             onKeyUp={onKeyUp}
             onChange={handleTag}
           />
+        </RegisterItem>
+        <RegisterItem style={{ display: 'inline-block' }}>
+          <RegisterTitle></RegisterTitle>
           <TagWrapper>{tagItems}</TagWrapper>
         </RegisterItem>
-
         <RegisterItem>
           <RegisterTitle>설명</RegisterTitle>
           <RegisterTextArea
@@ -177,7 +237,7 @@ const ProductRegister = () => {
           />
         </RegisterItem>
         <ButtonWrapper>
-          <Button className="register-button" size="medium">
+          <Button className="register-button" size="medium" type="submit">
             상품 등록
           </Button>
         </ButtonWrapper>
@@ -187,8 +247,9 @@ const ProductRegister = () => {
 };
 
 const RegisterPage = styled.div`
-  max-width: 1020px;
-  margin: 0 auto;
+  width: 50rem;
+  margin: auto;
+  padding: 4.5rem 5.4375rem;
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -215,7 +276,7 @@ const Label = styled.label`
   justify-content: center;
   align-items: center;
   color: ${palette.purple};
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: ${palette.lightGrey};
   cursor: pointer;
 `;
 
@@ -251,11 +312,28 @@ const RegisterTitle = styled.label`
   align-items: center;
 `;
 
-const ImageCount = styled.span`
+const Count = styled.span`
   color: ${palette.darkGray};
 `;
 
-const RegisterInput = styled.input``;
+const SelectBlock = styled.select`
+  padding: 0.75rem 1.25rem;
+  border: none;
+  outline: none;
+  background-color: #f6f8fa;
+`;
+
+const RegisterInput = styled.input`
+  width: 100%;
+  height: 3.375rem;
+  padding: 0 1.2rem;
+  background-color: #f6f8fa;
+  border: none;
+  outline: none;
+  ::placeholder {
+    color: #8492a6;
+  }
+`;
 
 const TagWrapper = styled.ul`
   display: flex;
@@ -271,6 +349,13 @@ const TagItem = styled.li`
 const RegisterTextArea = styled.textarea`
   width: 100%;
   min-height: 120px;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  background-color: #f6f8fa;
+  ::placeholder {
+    color: #8492a6;
+  }
 `;
 
 const ButtonWrapper = styled.div`
