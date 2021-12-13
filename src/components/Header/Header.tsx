@@ -27,7 +27,7 @@ function Header() {
         <img src="" alt="로고" />
         <SearchInput></SearchInput>
         <div>
-          <ProfileItem>내정보</ProfileItem>
+          <BarItem to="/myPage">내정보</BarItem>
           <ProfileItem>장바구니</ProfileItem>
         </div>
       </SearchHeader>
