@@ -32,8 +32,10 @@ function useMyPage() {
     setAddress(fullAddress);
   };
 
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const editUserInfo: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+
+    // TODO: API 완성되면 구현
   };
 
   return {
@@ -45,7 +47,7 @@ function useMyPage() {
     onChangePhoneNumber,
     onChangeDetailAddress,
     handleComplete,
-    onSubmit,
+    editUserInfo,
   };
 }
 

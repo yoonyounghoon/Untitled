@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserInfo } from '../components/myPage';
+import { UserInfo } from '../components/MyPage';
 
 function MyPage() {
   return <UserInfo />;
