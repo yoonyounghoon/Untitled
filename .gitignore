@@ -7,9 +7,6 @@
 
 # testing
 /coverage
-/Header
-/join
-.App.tsx
 
 # production
 /build
