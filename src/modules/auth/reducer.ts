@@ -1,5 +1,5 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loginAPI } from '../../api/auth';
+import { loginAPI } from '../../api/user';
 import { RootState } from '../store';
 
 type loginProps = {

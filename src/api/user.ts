@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { JoinForm } from '../components/auth/Join/useJoin';
-import { AUTH_URL } from '../lib/constants';
 import { loginState } from '../modules/auth/reducer';
+import { client } from './axios';
 interface Flag {
   code: string;
   data: {
@@ -23,15 +23,8 @@ interface checkCodeResponse {
   };
 }
 
-const auth = axios.create({
-  baseURL: AUTH_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
 export const loginAPI = async (id: string, password: string) => {
-  const response: AxiosResponse<loginState> = await auth.post('/login', {
+  const response: AxiosResponse<loginState> = await client.post('/login', {
     userid: id,
     password,
   });
@@ -39,28 +32,28 @@ export const loginAPI = async (id: string, password: string) => {
 };
 
 export const checkIdAPI = async (id: string) => {
-  const response: AxiosResponse<Flag> = await auth.post('/overlap/userid', {
+  const response: AxiosResponse<Flag> = await client.post('/overlap/userid', {
     userid: id,
   });
   return response.data;
 };
 
 export const checkEmailAPI = async (email: string) => {
-  const response: AxiosResponse<Flag> = await auth.post('overlap/email', {
+  const response: AxiosResponse<Flag> = await client.post('overlap/email', {
     email,
   });
   return response.data;
 };
 
 export const checkNicknameAPI = async (nickname: string) => {
-  const response: AxiosResponse<Flag> = await auth.post('/overlap/username', {
+  const response: AxiosResponse<Flag> = await client.post('/overlap/username', {
     username: nickname,
   });
   return response.data;
 };
 
 export const sendEmailAPI = async (email: string, token: string) => {
-  const response: AxiosResponse<sendEmailResponse> = await auth.post(
+  const response: AxiosResponse<sendEmailResponse> = await client.post(
     '/verification/email',
     {
       email,
@@ -71,7 +64,7 @@ export const sendEmailAPI = async (email: string, token: string) => {
 };
 
 export const checkCodeAPI = async (code: string, token: string) => {
-  const response: AxiosResponse<checkCodeResponse> = await auth.post(
+  const response: AxiosResponse<checkCodeResponse> = await client.post(
     '/verification/code',
     {
       certificationCode: code,
@@ -82,7 +75,7 @@ export const checkCodeAPI = async (code: string, token: string) => {
 };
 
 export const joinAPI = async (form: JoinForm) => {
-  const response = await auth.post('/join', {
+  const response = await client.post('/join', {
     email: form.email,
     userid: form.id,
     username: form.nickname,

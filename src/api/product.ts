@@ -1,13 +1,6 @@
 import axios from 'axios';
-import { AUTH_URL } from '../lib/constants';
 import { RegisterUploadData } from '../types';
-
-const auth = axios.create({
-  baseURL: AUTH_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import { auth } from './axios';
 
 export const AddProductApi = async ({
   images,
