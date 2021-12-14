@@ -5,6 +5,7 @@ import {
   JoinPage,
   LoginPage,
   MainPage,
+  MyPage,
   ProductDetailPage,
   ProductRegisterPage,
   SellerPage,
@@ -23,6 +24,7 @@ function App() {
         <Route path="/sellerInfo" component={SellerPage} />
         <Route path="/product-register" component={ProductRegisterPage} />
         <Route path="/products" component={ProductDetailPage} />
+        <Route path="/myPage" component={MyPage} />
         {/* <Route path="/chatting" component={ChattingPage} /> */}
       </Switch>
     </BrowserRouter>

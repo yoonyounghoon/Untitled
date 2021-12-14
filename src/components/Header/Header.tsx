@@ -27,8 +27,8 @@ function Header() {
         <img src="" alt="로고" />
         <SearchInput></SearchInput>
         <div>
-          <ProfileItem>내정보</ProfileItem>
-          <ProfileItem>장바구니</ProfileItem>
+          <Item to="/myPage">내정보</Item>
+          <Item to="#">장바구니</Item>
         </div>
       </SearchHeader>
       <GNB>
@@ -92,7 +92,8 @@ const SearchInput = styled.input`
   outline: none;
 `;
 
-const ProfileItem = styled.strong`
+const Item = styled(NavLink)`
+  font-weight: bold;
   padding: 0 10px 0;
   font-size: 12px;
 `;
