@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import palette from '../styles/palette';
-import Button from './common/Button';
+import palette from '../../styles/palette';
+import Button from '../common/Button';
 
 const CountBox = ({ title }: { title: string }) => {
   return (
@@ -23,7 +23,7 @@ const SellerInfoList = () => {
   return (
     <SellerInfoBlock>
       <SellerImage
-        src={require('../assets/mong.jpg').default}
+        src={require('../../assets/mong.jpg').default}
         alt="판매자 프로필"
       ></SellerImage>
       <SellerProfile>
