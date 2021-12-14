@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { RegisterUploadData } from '../types';
 import { auth } from './axios';
 
