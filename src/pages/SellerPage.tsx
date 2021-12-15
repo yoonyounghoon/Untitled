@@ -1,6 +1,6 @@
 import React from 'react';
-import SellerInfoList from '../components/SellerInfoList';
-import ReviewList from '../components/ReviewList';
+import SellerInfoList from '../components/sellerInfo/SellerInfoList';
+import ReviewList from '../components/sellerInfo/ReviewList';
 import styled from 'styled-components';
 
 const SellerPage = () => {

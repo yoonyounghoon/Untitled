@@ -1,7 +1,7 @@
 // ImagePicker.tsx
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { images } from '../data/images';
+import { images } from '../../data/images';
 
 function Carousel({ autoflow = 3000 }) {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
