@@ -18,7 +18,8 @@ const IMAGE_MAX_COUNT = 5;
 const TAG_MAX_COUNT = 5;
 
 const ProductRegister = () => {
-  const [images, setImages] = useState<string[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const [images, setImages] = useState([]);
   const [tags, setTags] = useState<string[] | []>([]);
   const [tagName, setTagName] = useState<string>('');
   const [productName, setProductName] = useInput('');
@@ -33,11 +34,8 @@ const ProductRegister = () => {
   }, []);
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('e.target.files 은 :', e.target.files);
-    console.log('e.target.files[0]은 : ', e.target.files[0]);
-    //    const updateImageFormated = images.map((image) => updateImageFormat(image));
     const nowSelectImageList = e.target.files;
-    const nowImageList = [...images];
+    const nowImageList = [...previews];
 
     if (isValidImageLength(nowImageList)) {
       alert('이미지 개수 초과입니다');
@@ -49,8 +47,8 @@ const ProductRegister = () => {
       nowImageList.push(nowImgUrl);
     }
 
-    setImages(nowImageList);
-    console.log(images);
+    setPreviews(nowImageList);
+    setImages([...images, e.target.files[0]]);
   };
 
   const handleDeleteTag = (clickTag: string) => {
@@ -105,6 +103,7 @@ const ProductRegister = () => {
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
+    console.log(images);
     let formData = new FormData();
 
     images?.forEach((image) => {
@@ -165,8 +164,8 @@ const ProductRegister = () => {
               ></InputElement>
             </Label>
             <PreviewImageContainer>
-              {!!images.length &&
-                images.map((img, index) => (
+              {!!previews.length &&
+                previews.map((img, index) => (
                   <PreviewImage
                     src={img}
                     alt="preview-img"
