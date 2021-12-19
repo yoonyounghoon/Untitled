@@ -1,26 +1,9 @@
-import axios from 'axios';
-import { RegisterUploadData } from '../types';
-import { auth } from './axios';
+import { Client } from './http';
 
-export const AddProductApi = async ({
-  images,
-  productName,
-  category,
-  price,
-  shipFee,
-  shipStart,
-  tags,
-  content,
-}: RegisterUploadData) => {
-  const response = await auth.post('/products', {
-    images,
-    productName,
-    category,
-    price,
-    shipFee,
-    shipStart,
-    tags,
-    content,
-  });
+export const AddProductApi = async (form: any) => {
+  for (let key of form.keys()) {
+    console.log(key, ':', form.get(key));
+  }
+  const response = await Client.post('/products', form, 'multipart/form-data');
   return response;
 };
