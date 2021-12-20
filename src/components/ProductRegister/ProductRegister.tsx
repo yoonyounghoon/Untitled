@@ -18,7 +18,8 @@ const IMAGE_MAX_COUNT = 5;
 const TAG_MAX_COUNT = 5;
 
 const ProductRegister = () => {
-  const [images, setImages] = useState<string[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const [images, setImages] = useState([]);
   const [tags, setTags] = useState<string[] | []>([]);
   const [tagName, setTagName] = useState<string>('');
   const [productName, setProductName] = useInput('');
@@ -34,20 +35,20 @@ const ProductRegister = () => {
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nowSelectImageList = e.target.files;
-    const nowImageList = [...images];
+    const nowImageList = [...previews];
 
     if (isValidImageLength(nowImageList)) {
       alert('이미지 개수 초과입니다');
       return;
     }
 
-    for (let i = 0; i < nowSelectImageList.length; i++) {
-      const nowImgUrl = URL.createObjectURL(nowSelectImageList[i]);
+    for (let i = 0; i < nowSelectImageList!.length; i++) {
+      const nowImgUrl = URL.createObjectURL(nowSelectImageList![i]);
       nowImageList.push(nowImgUrl);
     }
 
-    setImages(nowImageList);
-    console.log(images);
+    setPreviews(nowImageList);
+    setImages([...images, e.target.files[0]]);
   };
 
   const handleDeleteTag = (clickTag: string) => {
@@ -101,18 +102,27 @@ const ProductRegister = () => {
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+
+    console.log(images);
+    let formData = new FormData();
+
+    images?.forEach((image) => {
+      formData.append('productRepImage ', image);
+    });
+    formData.append('productName  ', productName);
+    formData.append('categoryId ', category);
+    tags?.forEach((tag) => {
+      formData.append('hashtags ', tag);
+    });
+    formData.append('productPrice ', price);
+    formData.append('productDeliveryPrice ', shipFee);
+
+    formData.append('productDeliveryTerm ', shipStart);
+    formData.append('productInformation ', content);
+
     try {
-      const response = await AddProductApi({
-        images,
-        productName,
-        category,
-        price,
-        shipFee,
-        shipStart,
-        tags,
-        content,
-      });
-      if (response.status === 200) {
+      const response = await AddProductApi(formData);
+      if (response.status === 200 || 201) {
         console.log('상품등록 성공');
       }
     } catch (e) {
@@ -121,19 +131,20 @@ const ProductRegister = () => {
   };
 
   const CATEGORY = [
-    '전체',
-    '유리공예품',
-    '조각품',
-    '금속공예품',
-    '음식',
-    '한식',
-    '양식',
-    '수채화',
+    { title: '전체', id: 5 },
+    { title: '유리공예품', id: 15 },
+    { title: '금속공예품', id: 25 },
+    { title: '도자기공예품', id: 35 },
+    { title: '음식', id: 45 },
+    { title: '한식', id: 55 },
+    { title: '양식', id: 65 },
+    { title: '궁중간식', id: 75 },
+    { title: '졸업작품', id: 75 },
   ];
 
   return (
     <RegisterPage>
-      <RegisterWrapper onSubmit={onSubmit}>
+      <RegisterForm onSubmit={onSubmit}>
         <RegisterItem>
           <RegisterTitle>
             상품 이미지 &nbsp;
@@ -153,8 +164,8 @@ const ProductRegister = () => {
               ></InputElement>
             </Label>
             <PreviewImageContainer>
-              {!!images.length &&
-                images.map((img, index) => (
+              {!!previews.length &&
+                previews.map((img, index) => (
                   <PreviewImage
                     src={img}
                     alt="preview-img"
@@ -175,8 +186,8 @@ const ProductRegister = () => {
           <RegisterTitle>카테고리</RegisterTitle>
           <SelectBlock onChange={(e) => setCategory(e)}>
             {CATEGORY.map((name, index) => (
-              <option key={index} value={index}>
-                {name}
+              <option key={index} value={name.id}>
+                {name.title}
               </option>
             ))}
           </SelectBlock>
@@ -241,11 +252,10 @@ const ProductRegister = () => {
             상품 등록
           </Button>
         </ButtonWrapper>
-      </RegisterWrapper>
+      </RegisterForm>
     </RegisterPage>
   );
 };
-
 const RegisterPage = styled.div`
   width: 50rem;
   margin: auto;
@@ -256,8 +266,7 @@ const RegisterPage = styled.div`
     margin: 0;
   }
 `;
-
-const RegisterWrapper = styled.form`
+const RegisterForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
@@ -301,7 +310,7 @@ const PreviewImage = styled.img`
 
 const RegisterItem = styled.div`
   display: flex;
-  min-height: 50px;
+  min-height: 60px;
   margin: 15px 0;
 `;
 
