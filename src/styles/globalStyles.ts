@@ -9,13 +9,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html,body,#root{
-    height: 100%;
-    &::-webkit-scrollbar {
-      display: none;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-     
+    height: 100%; 
   }
 
   body {
