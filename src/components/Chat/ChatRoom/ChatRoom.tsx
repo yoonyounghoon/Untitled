@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { authSelector } from '../../../modules/auth/reducer';
 import SpeechOpponent from '../ChatSpeech/SpeechOpponent';
 import SpeechMe from '../ChatSpeech/SpeechMe';
+import ChatForm from '../ChatForm/ChatForm';
 
 interface Props {
   children: React.ReactNode;
@@ -13,16 +14,6 @@ const ChatRoom = () => {
   const chat = [
     {
       user: 'example123',
-      time: '03:21',
-      message: 'hi',
-    },
-    {
-      user: 'john',
-      time: '05:11',
-      message: 'wow',
-    },
-    {
-      user: 'example123',
       time: '12:50',
       message: 'hello',
     },
@@ -31,21 +22,7 @@ const ChatRoom = () => {
       time: '18:30',
       message: 'nice',
     },
-    {
-      user: 'example123',
-      time: '18:30',
-      message: 'nie',
-    },
-    {
-      user: 'example123',
-      time: '03:21',
-      message: 'hi',
-    },
-    {
-      user: 'john',
-      time: '05:11',
-      message: 'wow',
-    },
+
     {
       user: 'example123',
       time: '12:50',
@@ -60,26 +37,6 @@ const ChatRoom = () => {
       user: 'example123',
       time: '03:21',
       message: 'hi',
-    },
-    {
-      user: 'john',
-      time: '05:11',
-      message: 'wow',
-    },
-    {
-      user: 'example123',
-      time: '12:50',
-      message: 'hello',
-    },
-    {
-      user: 'john',
-      time: '18:30',
-      message: 'nice',
-    },
-    {
-      user: 'example123',
-      time: '18:30',
-      message: 'wow',
     },
   ];
   const { user } = useSelector(authSelector);
@@ -96,6 +53,8 @@ const ChatRoom = () => {
           );
         })}
       </ChatContainer>
+
+      <ChatForm />
     </ChatRoomContainer>
   );
 };
