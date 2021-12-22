@@ -5,4 +5,4 @@ export { default as ProductDetailPage } from './ProductDetailPage';
 export { default as ProductRegisterPage } from './ProductRegisterPage';
 export { default as SellerPage } from './SellerPage';
 export { default as MyPage } from './MyPage';
-export { default as ChattingListPage } from './ChattingListPage';
+export { default as ChattingPage } from './ChattingPage';
