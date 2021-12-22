@@ -5,6 +5,7 @@ import {
   JoinPage,
   LoginPage,
   MainPage,
+  MyLikeItemPage,
   MyPage,
   ProductDetailPage,
   ProductRegisterPage,
@@ -26,13 +27,10 @@ function App() {
         <Route path="/product-register" component={ProductRegisterPage} />
         <Route path="/products" component={ProductDetailPage} />
         <Route path="/myPage" component={MyPage} />
+        <Route path="/myLikeItem" component={MyLikeItemPage} />
         <Route path="/chatting" component={ChattingPage} />
         <Route path="/chatting/:chatId" component={ChattingPage} />
-        <Route path="/chatting" component={ChattingPage} />
       </Switch>
-      {/* <Switch>
-        <Route path="/chatting" component={ChattingPage} />
-      </Switch> */}
     </BrowserRouter>
   );
 }
