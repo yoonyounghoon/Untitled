@@ -34,13 +34,15 @@ const ChatRoomList = () => {
 
 const ChatListContainer = styled.div`
   flex: 2;
-  border: 1px solid black;
-  overflow-y: scroll;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ChatListBox = styled.ul`
-  padding: 0;
-  margin-top: 1rem;
+  padding: 0 0;
+  margin: 0;
 `;
 
 const ChatListElement = styled.li`
@@ -50,6 +52,7 @@ const ChatListElement = styled.li`
   display: flex;
   align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.3);
+  border-top: none;
   cursor: pointer;
   &:hover {
     background-color: #fafafd;

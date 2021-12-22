@@ -15,28 +15,38 @@ const ChatRoom = () => {
     {
       user: 'example123',
       time: '12:50',
-      message: 'hello',
+      message: 'hello😙',
     },
     {
       user: 'john',
       time: '18:30',
-      message: 'nice',
+      message: '안녕하세요. 채팅 페이지 입니다.',
     },
-
     {
       user: 'example123',
       time: '12:50',
-      message: 'hello',
+      message: 'hellooooooo ~_~ !! :_: 🚑',
     },
     {
       user: 'john',
       time: '18:30',
-      message: 'nice',
+      message: '안녕하세요. 채팅 페이지 입니다. Win Study Cafe Coffee',
+    },
+    {
+      user: 'example123',
+      time: '12:50',
+      message: 'hellooooooo ~_~ !! :_: 🚑',
+    },
+    {
+      user: 'john',
+      time: '18:30',
+      message: '안녕하세요. 채팅 페이지 입니다. Win Study Cafe Coffee',
     },
     {
       user: 'example123',
       time: '03:21',
-      message: 'hi',
+      message:
+        '안녕하세요. 채팅 페이지 입니다. 안녕하세요 긴 메세지를 보낼거에요 다음 칸으로 넘어가자 가자 가자 가자 가자~',
     },
   ];
   const { user } = useSelector(authSelector);
@@ -62,21 +72,28 @@ const ChatRoom = () => {
 const ChatRoomContainer = styled.div`
   flex: 5;
   width: 100%;
-  border: 1px solid grey;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ChatRoomTitle = styled.div`
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
   padding: 1rem;
   font-weight: 600;
-  border-bottom: 1px solid black;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 `;
 
 const ChatContainer = styled.div`
   padding: 2rem;
+  background-color: #f4f4fa;
 `;
 
 export default ChatRoom;

@@ -1,39 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
-import useTextArea from '../../../hooks/useTextArea';
+import useInput from '../../../hooks/useInput';
 import Button from '../../common/Button';
 
 const ChatForm = () => {
-  const onSubmit = () => {};
-  const [content, setContent] = useTextArea('');
+  const [content, setContent] = useInput('');
 
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    console.log(content);
+  };
   return (
     <RegisterForm onSubmit={onSubmit}>
-      <RegisterTextArea value={content} onChange={setContent} />
-      <Button
-        className="register-button"
-        size="small"
-        type="submit"
-        style={{ borderRadius: '10px', marginLeft: '5px' }}
-      >
-        전송
-      </Button>
+      <ChatFormWrapper>
+        <RegisterTextArea value={content} onChange={setContent} />
+        <Button
+          className="register-button"
+          size="small"
+          type="submit"
+          style={{ borderRadius: '10px', marginLeft: '5px' }}
+        >
+          전송
+        </Button>
+      </ChatFormWrapper>
     </RegisterForm>
   );
 };
 
 const RegisterForm = styled.form`
-  height: 5rem;
-  display: flex;
-  margin: 1rem;
+  position: sticky;
+  bottom: 0;
 `;
 
-const RegisterTextArea = styled.textarea`
-  width: 90%;
+const ChatFormWrapper = styled.div`
+  height: 3rem;
+  display: flex;
+  background-color: white;
+`;
+
+const RegisterTextArea = styled.input`
   padding: 1rem;
+  width: 100%;
   border: none;
   outline: none;
-  border-radius: 20px;
+  border-radius: 10px;
 
   background-color: #f6f8fa;
   ::placeholder {

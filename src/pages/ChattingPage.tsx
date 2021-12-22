@@ -20,7 +20,7 @@ const ChattingWrapper = styled.div`
   height: 40rem;
   display: flex;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding-bottom: 2rem;
 `;
 
 export default ChattingPage;
