@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import ChatRoomList from '../components/Chat/ChatList/ChatRoomList';
+import ChatRoom from '../components/Chat/ChatRoom/ChatRoom';
 
 const ChattingPage = ({ match }: RouteComponentProps) => {
   const page = match.params;
@@ -9,6 +10,7 @@ const ChattingPage = ({ match }: RouteComponentProps) => {
   return (
     <ChattingWrapper>
       <ChatRoomList />
+      <ChatRoom />
     </ChattingWrapper>
   );
 };

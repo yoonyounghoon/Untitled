@@ -16,8 +16,6 @@ const ChatRoomList = () => {
     { id: 4, nickname: '파인애플' },
   ];
 
-  const chat = [{}];
-
   const [chattings, setChattings] = useState();
   const [roomList, setRoomList] = useState(chatList);
   return (
