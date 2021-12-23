@@ -8,3 +8,8 @@ export interface RegisterUploadData {
   tags: string[];
   content: string;
 }
+
+export interface ChatData {
+  id: number;
+  nickname: string;
+}
