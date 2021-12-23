@@ -106,8 +106,9 @@ const ProductRegister = () => {
     console.log(images);
     let formData = new FormData();
 
-    images?.forEach((image) => {
-      formData.append('productRepImage ', image);
+    images?.forEach((image, index) => {
+      if (index === 0) formData.append(`productRepImage`, image);
+      else formData.append(`productImage${index}`, image);
     });
     formData.append('productName  ', productName);
     formData.append('categoryId ', category);
