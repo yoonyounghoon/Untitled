@@ -1,44 +1,56 @@
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { productSelector } from '../../modules/product/reducer';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
 
 const ProductContent = () => {
+  const { product } = useSelector(productSelector);
+
   return (
-    <Wrapper>
-      <div>
-        <div id="product-info">
-          <img
-            alt=""
-            src="https://image1.coupangcdn.com/image/vendor_inventory/4b13/bee8f5f729c00f7498b26737465aa7522addf5c73c396747a0e546b5e3ff.jpg"
-          ></img>
-        </div>
-        <div id="caution"></div>
-        <div id="truth-safety"></div>
-      </div>
-      <div>
+    <>
+      <Nav>
+        <ol className="product-detail__list">
+          <li className="product-detail__list_item active">
+            <a href="#info">작품정보</a>
+          </li>
+          <li className="product-detail__list_item">
+            <a href="#caution">주의사항</a>
+          </li>
+          <li className="product-detail__list_item">
+            <a href="#truth-safety">신뢰와 안전</a>
+          </li>
+        </ol>
+      </Nav>
+      <Content>
+        <Info>
+          <div id="product-info">{product?.productInformation}</div>
+          <div id="caution"></div>
+          <div id="truth-safety"></div>
+        </Info>
         <ArtistCard>
           <div>
             <img src="" alt="" />
-            <span>애프터모멘트</span>
+            <span>{product?.seller.sellerName}</span>
           </div>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-            nisi optio blanditiis necessitatibus numquam. Distinctio alias iusto
-            maiores facere optio, nam rerum officia cumque, recusandae
-            praesentium, ipsam architecto aut? Dignissimos.
-          </p>
+          <p>{product?.seller.sellerInformation}</p>
           <Button className="follow-button" inverted>
             팔로우
           </Button>
         </ArtistCard>
-      </div>
-    </Wrapper>
+      </Content>
+    </>
   );
 };
 
-const Wrapper = styled.div`
-  max-width: 1020px;
+const Content = styled.div`
+  width: 1020px;
   display: flex;
+`;
+
+const Info = styled.div`
+  width: 720px;
+  padding: 50px 20px;
 `;
 
 const ArtistCard = styled.div`
@@ -49,6 +61,28 @@ const ArtistCard = styled.div`
   margin: 10px;
   .follow-button {
     border: 1px solid ${palette.purple};
+  }
+`;
+
+const Nav = styled.nav`
+  width: 100%;
+  border-top: 0.5px solid ${palette.brightGrey};
+  border-bottom: 0.5px solid ${palette.brightGrey};
+  .product-detail__list {
+    width: 1020px;
+    display: flex;
+    margin: 0 auto;
+  }
+  .product-detail__list_item {
+    display: flex;
+    margin-right: 10px;
+    padding: 16px 28px;
+    color: ${palette.grey};
+    cursor: pointer;
+  }
+  .active {
+    color: ${palette.purple};
+    border-bottom: 1px solid ${palette.purple};
   }
 `;
 

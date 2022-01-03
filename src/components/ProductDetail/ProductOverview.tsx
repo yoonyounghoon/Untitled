@@ -1,27 +1,21 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { productSelector } from '../../modules/product/reducer';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
-
-const images: string[] = [
-  'https://thumbnail7.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/44ed/752cd1c6277da7bd5505d00a429887649df11b28cd6cfbfc717e0fb6bdea.jpg',
-  'https://thumbnail6.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/869a/74e4875bf40dd95fa4e078abd3474e7a42262a7fd79169af7e32de1f1752.jpg',
-  'https://thumbnail6.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/009b/ba5c53dd525a446946606934a26a7cb07f3fc3cfe02d79e714058724cdcd.jpg',
-];
+import useProductDetail from './useProductDetail';
 
 const ProductOverview = () => {
-  const [mainImg, setMainImg] = useState(images[0]);
+  const { mainImg, images, productId, changeMainImage } = useProductDetail();
+  const { product } = useSelector(productSelector);
 
-  // 클릭시 메인 이미지 변화
-  function changeMainImage(src: string) {
-    setMainImg(src);
-  }
   return (
     <Wrapper>
       <ImgViewer>
         <div className="product-image__items">
-          {images.map((imageSrc) => (
+          {images.map((imageSrc, idx) => (
             <Thumbnail
+              key={idx}
               src={imageSrc}
               alt=""
               onMouseEnter={() => changeMainImage(imageSrc)}
@@ -31,20 +25,22 @@ const ProductOverview = () => {
         <MainImage src={mainImg} alt="product image" />
       </ImgViewer>
       <ProductOverviewContent>
-        <h1 className="product-content__title">
-          [JAJU/자주] 남/여 피치기모 체크 파자마상하세트 6종택1
-        </h1>
-        <strong className="product-content__price">17,000원</strong>
+        <h1 className="product-content__title">{product?.productName}</h1>
+        <strong className="product-content__price">
+          {product?.productPrice}원
+        </strong>
         <div>
           <span className="product-content__delivery_title">배송비</span>
-          <span className="product-content__delivery_content">4,000원</span>
+          <span className="product-content__delivery_content">
+            {product?.productPrice}원
+          </span>
         </div>
         <div>
           <span className="product-content__delivery_period_title">
             배송시작
           </span>
           <span className="product-content__delivery_period_content">
-            최대 14일 이내
+            최대 {product?.productDeliveryTerm}일 이내
           </span>
         </div>
         <div className="product-content__buttons">
