@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { ChatJoinApi } from '../../../api/chat';
 const ChatRoomList = () => {
   const chatList = [
     { id: 1, nickname: '바나나' },
@@ -18,11 +20,17 @@ const ChatRoomList = () => {
 
   const [chattings, setChattings] = useState();
   const [roomList, setRoomList] = useState(chatList);
+
+  const handleChatting = (chatList: any) => {
+    console.log(chatList);
+    const sellerId = 5;
+    ChatJoinApi(chatList.id, sellerId);
+  };
   return (
     <ChatListContainer>
       <ChatListBox>
         {roomList?.map((chatList, index) => (
-          <ChatListElement key={index}>
+          <ChatListElement key={index} onClick={() => handleChatting(chatList)}>
             <img src="./asset/profile.png" alt="profile" />
             <h3>{chatList.nickname}</h3>
           </ChatListElement>
