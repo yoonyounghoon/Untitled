@@ -13,6 +13,9 @@ interface Props {
 }
 
 const ChatRoom = () => {
+  // const socket = new SockJS('https://gradu-test.herokuapp.com/websocket');
+  // const ws = Stomp.over(socket);
+  // console.log('ws',ws);
   const chat = [
     {
       user: 'example123',
@@ -74,14 +77,15 @@ const ChatRoom = () => {
   };
 
   useEffect(() => {
-    //connect();
-    const socket = new SockJS('https://gradu-test.herokuapp.com/websocket');
-    stompClient.current = Stomp.over(socket);
-    stompClient.current.connect({}, function(){
-      stompClient.current.subscribe('/sub/chat/room/15', function (e:any) {
-        console.log('ss',JSON.parse(e.body)); 
-    });
-    })
+     connect();
+    // const socket = new SockJS('https://gradu-test.herokuapp.com/websocket');
+    // stompClient.current = Stomp.over(socket);
+    // stompClient.current.connect({}, function(){
+    //   console.log('hi');
+    //   stompClient.current.subscribe('/sub/chat/room/15', function (e:any) {
+    //     console.log('ss',JSON.parse(e.body)); 
+    // });
+    // })
     // return () => {
     //   if (isConnected.current) {
     //     stompClient.current.disconnect(() => {
@@ -97,18 +101,20 @@ const ChatRoom = () => {
     // };
   }, []);
 
+
   const connect = () => {
     // 웹 소켓 연결, subscribe로 방 참가자 불러옴
     console.log('websocket 연결');
-    const socket = new SockJS('https://gradu-test.herokuapp.com/websocket');
-   // const socket = new SockJS('https://api.babble.gg/connection');
+    const socket = new SockJS('https://gradu-test.herokuapp.com/websocket'); 
     console.log('socket = ', socket);
     stompClient.current = Stomp.over(socket);
     console.log('stompClient.current = ', stompClient.current);
+    let header = {Authorization: sessionStorage.getItem('accessToken')};
+    console.log('header = ',header);
 
     // connection이 맺어지면 실행된다.
-    
-    stompClient.current.connect({}, function(){
+    stompClient.current.connect(header, function(){
+      console.log('소켓 연결 성공');
       stompClient.current.subscribe('/sub/chat/room/15', function (e:any) {
         console.log('ss',JSON.parse(e.body)); 
     },  );
